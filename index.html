@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마케팅 브리핑 아카이브 | 조비스</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d2e;
+      --surface2: #252840;
+      --border: #2e3150;
+      --text: #e2e4f0;
+      --muted: #8b8fa8;
+      --accent: #6c63ff;
+      --c-commerce: #f77f00;
+      --c-marketing: #e040fb;
+      --c-dish: #ff6b6b;
+      --c-battery: #ffd166;
+      --c-shaver: #06d6a0;
+      --c-tooth: #118ab2;
+      --c-jerky: #ef476f;
+      --header-h: 140px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ── */
+    #site-header {
+      background: linear-gradient(135deg, #1a1d2e 0%, #252840 100%);
+      border-bottom: 1px solid var(--border);
+      left: 0; top: 0; right: 0;
+      padding: 18px 28px 14px;
+      position: sticky;
+      z-index: 200;
+    }
+    .header-row1 {
+      align-items: center;
+      display: flex;
+      gap: 16px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .header-row1 h1 { font-size: 1.2rem; font-weight: 700; flex: 1; }
+    .header-row1 h1 span { color: var(--accent); }
+    #searchInput {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.85rem;
+      outline: none;
+      padding: 7px 12px;
+      transition: border-color 0.2s;
+      width: 200px;
+    }
+    #searchInput:focus { border-color: var(--accent); }
+    #searchInput::placeholder { color: var(--muted); }
+
+    /* ── SECTION NAV ── */
+    .section-nav {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 10px auto 0;
+      max-width: 980px;
+    }
+    .snav-btn {
+      align-items: center;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      font-size: 0.78rem;
+      font-weight: 600;
+      gap: 5px;
+      padding: 5px 13px;
+      transition: all 0.18s;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .snav-btn:hover { color: var(--text); border-color: var(--accent); }
+    .snav-btn.active { color: #fff; border-color: transparent; }
+    .snav-btn[data-sec="all"].active        { background: var(--accent); }
+    .snav-btn[data-sec="commerce"].active   { background: var(--c-commerce); }
+    .snav-btn[data-sec="marketing"].active  { background: var(--c-marketing); }
+    .snav-btn[data-sec="dish"].active       { background: var(--c-dish); }
+    .snav-btn[data-sec="battery"].active    { background: var(--c-battery); color: #222; }
+    .snav-btn[data-sec="shaver"].active     { background: var(--c-shaver); }
+    .snav-btn[data-sec="tooth"].active      { background: var(--c-tooth); }
+    .snav-btn[data-sec="jerky"].active      { background: var(--c-jerky); }
+
+    /* ── MAIN ── */
+    main {
+      margin: 0 auto;
+      max-width: 980px;
+      padding: 28px 28px 80px;
+    }
+
+    .meta-row {
+      align-items: center;
+      color: var(--muted);
+      display: flex;
+      font-size: 0.82rem;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .meta-row strong { color: var(--accent); }
+
+    /* ── ISSUE CARD ── */
+    .issue {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .issue:hover { border-color: #4a4880; }
+    .issue[open] { border-color: var(--accent); }
+
+    .issue-summary {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      gap: 14px;
+      list-style: none;
+      padding: 16px 22px;
+      user-select: none;
+    }
+    .issue-summary::-webkit-details-marker { display: none; }
+
+    .toggle-icon {
+      color: var(--accent);
+      flex-shrink: 0;
+      font-size: 0.9rem;
+      transition: transform 0.2s;
+      width: 14px;
+    }
+    .issue[open] .toggle-icon { transform: rotate(90deg); }
+
+    .issue-meta { flex: 1; min-width: 0; }
+    .issue-title { font-size: 0.95rem; font-weight: 700; }
+    .issue-date  { color: var(--muted); font-size: 0.78rem; margin-top: 2px; }
+    .issue-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+
+    .chip {
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+    }
+    .chip-commerce  { background: rgba(247,127,0,.15);   color: var(--c-commerce); }
+    .chip-marketing { background: rgba(224,64,251,.15);  color: var(--c-marketing); }
+    .chip-dish      { background: rgba(255,107,107,.15); color: var(--c-dish); }
+    .chip-battery   { background: rgba(255,209,102,.15); color: var(--c-battery); }
+    .chip-shaver    { background: rgba(6,214,160,.15);   color: var(--c-shaver); }
+    .chip-tooth     { background: rgba(17,138,178,.15);  color: var(--c-tooth); }
+    .chip-jerky     { background: rgba(239,71,111,.15);  color: var(--c-jerky); }
+
+    /* ── ISSUE BODY ── */
+    .issue-body {
+      border-top: 1px solid var(--border);
+      padding: 22px 24px;
+    }
+
+    /* ── SECTION JUMP BAR (inside issue) ── */
+    .jump-bar {
+      background: var(--surface2);
+      border-radius: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 22px;
+      padding: 8px 10px;
+    }
+    .jump-bar span {
+      color: var(--muted);
+      font-size: 0.74rem;
+      padding: 3px 6px;
+    }
+    .jump-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.74rem;
+      padding: 3px 10px;
+      text-decoration: none;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .jump-btn:hover { color: var(--text); border-color: var(--accent); }
+
+    /* ── SECTIONS ── */
+    .sec {
+      margin-bottom: 26px;
+      scroll-margin-top: calc(var(--header-h) + 20px);
+    }
+    .sec:last-child { margin-bottom: 0; }
+
+    .sec-header {
+      align-items: center;
+      display: flex;
+      gap: 9px;
+      margin-bottom: 12px;
+    }
+    .sec-dot {
+      border-radius: 50%;
+      flex-shrink: 0;
+      height: 8px;
+      width: 8px;
+    }
+    .dot-commerce  { background: var(--c-commerce); }
+    .dot-marketing { background: var(--c-marketing); }
+    .dot-dish      { background: var(--c-dish); }
+    .dot-battery   { background: var(--c-battery); }
+    .dot-shaver    { background: var(--c-shaver); }
+    .dot-tooth     { background: var(--c-tooth); }
+    .dot-jerky     { background: var(--c-jerky); }
+
+    .sec-title { font-size: 0.92rem; font-weight: 700; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 22px 0; }
+
+    /* ── NEWS CARDS ── */
+    .news-card {
+      background: var(--surface2);
+      border-left: 3px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      padding: 13px 15px;
+    }
+    .news-card.commerce  { border-left-color: var(--c-commerce); }
+    .news-card.marketing { border-left-color: var(--c-marketing); }
+    .news-card.dish      { border-left-color: var(--c-dish); }
+    .news-card.ref       { border-left-color: var(--accent); background: rgba(108,99,255,.06); }
+
+    .ref-badge {
+      background: rgba(108,99,255,.2);
+      border-radius: 4px;
+      color: var(--accent);
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      padding: 2px 8px;
+    }
+    .news-date     { color: var(--muted); font-size: 0.74rem; margin-bottom: 3px; }
+    .news-headline { color: var(--text); font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; }
+    .news-summary  { color: var(--muted); font-size: 0.83rem; line-height: 1.6; margin-bottom: 7px; }
+    .news-link     { color: var(--accent); font-size: 0.78rem; text-decoration: none; }
+    .news-link:hover { text-decoration: underline; }
+
+    .empty { color: var(--muted); font-size: 0.84rem; font-style: italic; padding: 4px 0; }
+
+    /* ── HIDDEN ── */
+    .hidden { display: none !important; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 60px;
+      padding: 18px 28px;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      #site-header, main { padding-left: 14px; padding-right: 14px; }
+      #searchInput { width: 140px; }
+    }
+  .ptr-indicator{text-align:center;height:0;overflow:hidden;transition:height .2s;font-size:14px;color:#94a3b8;line-height:50px}
+.ptr-indicator.pulling{height:50px}
+.ptr-indicator.refreshing{height:50px;color:#3b82f6}
+</style>
+</head>
+<body>
+<div class="ptr-indicator" id="ptr">⬇ 당겨서 새로고침</div>
+<script>
+(function(){
+  var startY=0,pulling=false,el=document.getElementById('ptr');
+  document.addEventListener('touchstart',function(e){
+    if(window.scrollY===0){startY=e.touches[0].clientY;pulling=true;}
+  },{passive:true});
+  document.addEventListener('touchmove',function(e){
+    if(!pulling)return;
+    var dy=e.touches[0].clientY-startY;
+    if(dy>0&&dy<150){el.style.height=Math.min(dy*0.5,50)+'px';}
+    if(dy>80){el.className='ptr-indicator pulling';el.textContent='↻ 놓으면 새로고침';}
+    else{el.className='ptr-indicator';el.textContent='⬇ 당겨서 새로고침';}
+  },{passive:true});
+  document.addEventListener('touchend',function(){
+    if(!pulling)return;
+    pulling=false;
+    if(el.classList.contains('pulling')){
+      el.className='ptr-indicator refreshing';
+      el.textContent='새로고침 중...';
+      window.location.href=window.location.pathname+'?t='+Date.now();
+    }else{el.style.height='0';}
+  });
+})();
+</script>
+
+<!-- ══════════ HEADER ══════════ -->
+<header id="site-header">
+  <div class="header-row1">
+    <h1>📊 마케팅 브리핑 <span>아카이브</span></h1>
+    <input id="searchInput" type="text" placeholder="🔍 검색..." oninput="filterIssues()">
+  </div>
+
+  <!-- 섹션 네비게이션 (클릭 → 해당 섹션으로 스크롤 이동) -->
+  <nav class="section-nav">
+    <button class="snav-btn active" data-sec="all"       onclick="navTo('all')">전체</button>
+    <button class="snav-btn"        data-sec="commerce"  onclick="navTo('commerce')">🛒 커머스 동향</button>
+    <button class="snav-btn"        data-sec="marketing" onclick="navTo('marketing')">📣 마케팅 뉴스</button>
+    <button class="snav-btn"        data-sec="dish"      onclick="navTo('dish')">🍽️ 식기세척기 세제</button>
+    <button class="snav-btn"        data-sec="battery"   onclick="navTo('battery')">🔋 건전지</button>
+    <button class="snav-btn"        data-sec="shaver"    onclick="navTo('shaver')">🪒 전기면도기</button>
+    <button class="snav-btn"        data-sec="tooth"     onclick="navTo('tooth')">🪥 전동칫솔</button>
+    <button class="snav-btn"        data-sec="jerky"     onclick="navTo('jerky')">🥩 육포</button>
+  </nav>
+</header>
+
+<!-- ══════════ MAIN ══════════ -->
+<main>
+  <div class="meta-row">
+    <span>총 <strong id="visibleCount">6</strong>개 이슈</span>
+    <span id="filterLabel"></span>
+  </div>
+
+  <!-- ════════════ ISSUE Vol.6 ════════════ -->
+  <details class="issue" open
+    data-secs="commerce marketing dish battery shaver tooth jerky"
+    data-text="커머스 동향 쿠팡 가정의 달 빅세일 와우회원 브랜드데이 오랄비 쿠쿠 CJ제일제당 정관장 오픈서베이 온라인 쇼핑 트렌드 리포트 2026 네이버플러스스토어 토스쇼핑 AI 쇼핑 가전 어버이날 자동혈압계 공기청정기 마케팅 뉴스 The Drum Awards Marketing Americas 2026 Snap Grace Kao Edison Ballroom 아이보스 넥스트커머스 Meta 어드밴티지 트렌드모니터 압축소비 의도적 안티스위치 나이무용론 위안 자기 정체성 캐릿 Z세대 플랫폼별 트렌드 저소비 식기세척기 Cascade Clean Machine Reggie Repairman Finish 건전지 Duracell Messi 전기면도기 Braun Philips Panasonic 전동칫솔 필립스 소닉케어 올 뉴 소닉케어 프로 박수홍 행복해다홍 iF 디자인 어워드 2026 30일 환불 보장 웰컴팩 오랄비 쿠팡 브랜드데이 육포 Jack Link's MrBeast WTF ANZ">
+    <summary class="issue-summary">
+      <span class="toggle-icon">▶</span>
+      <div class="issue-meta">
+        <div class="issue-title">📋 Vol.6 — 2026년 5월 2주차</div>
+        <div class="issue-date">2026.05.04 – 2026.05.10 | 발행 2026.05.11</div>
+        <div class="issue-chips">
+          <span class="chip chip-commerce">🛒 커머스 동향</span>
+          <span class="chip chip-marketing">📣 마케팅 뉴스</span>
+          <span class="chip chip-dish">🍽️ 식기세척기</span>
+          <span class="chip chip-battery">🔋 건전지</span>
+          <span class="chip chip-shaver">🪒 전기면도기</span>
+          <span class="chip chip-tooth">🪥 전동칫솔</span>
+          <span class="chip chip-jerky">🥩 육포</span>
+        </div>
+      </div>
+    </summary>
+
+    <div class="issue-body" id="body-vol6">
+
+      <!-- 섹션 점프 바 -->
+      <div class="jump-bar">
+        <span>바로가기 →</span>
+        <a class="jump-btn" onclick="jumpTo('sec-commerce-6')">🛒 커머스</a>
+        <a class="jump-btn" onclick="jumpTo('sec-marketing-6')">📣 마케팅</a>
+        <a class="jump-btn" onclick="jumpTo('sec-dish-6')">🍽️ 식기세척기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-battery-6')">🔋 건전지</a>
+        <a class="jump-btn" onclick="jumpTo('sec-shaver-6')">🪒 전기면도기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-tooth-6')">🪥 전동칫솔</a>
+        <a class="jump-btn" onclick="jumpTo('sec-jerky-6')">🥩 육포</a>
+      </div>
+
+      <!-- ▸ 커머스 동향 -->
+      <div class="sec" id="sec-commerce-6" data-sec="commerce">
+        <div class="sec-header">
+          <div class="sec-dot dot-commerce"></div>
+          <div class="sec-title">🛒 커머스 동향 (Commerce Trends)</div>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.04.20~05.07 · 국내</div>
+          <div class="news-headline">쿠팡 '가정의 달 빅세일' — 3만 상품 와우회원 할인 + 브랜드데이에 오랄비 합류</div>
+          <div class="news-summary">쿠팡이 가정의 달 본격 시즌(4/20~5/7) 와우회원 전용 약 3만 개 상품 할인. 핵심은 '브랜드데이' — 매일 최대 3개 브랜드가 단 하루 최대 혜택. 오랄비·쿠쿠·CJ제일제당·정관장 등 약 40개 브랜드 참여. 어버이날·어린이날·연휴 즐기기 테마관 + 호텔·레저·전시·공연 같은 '경험형 상품'까지 영역 확장. 1인 브랜드도 '브랜드데이' 패턴(특정 1일에 모든 혜택을 압축)을 자체 SNS·뉴스레터에 옮겨 적용 가능.</div>
+          <a class="news-link" href="https://www.news1.kr/industry/distribution/6135362" target="_blank">📰 뉴스1 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.05 · 국내</div>
+          <div class="news-headline">오픈서베이 '온라인 쇼핑 트렌드 리포트 2026' — 쿠팡 -7.0%p, 네이버플러스스토어 +7.5%p로 양자 체제</div>
+          <div class="news-summary">쿠팡 주이용 -7.0%p, 네이버플러스스토어 +7.5%p로 수직 교차. 만족도는 네이버플러스스토어 84.0% &gt; 쿠팡 72.0% &gt; 카카오쇼핑 61.7%로 네이버 1위 — 앱 편의성·배송이 만족 요인. 토스쇼핑은 인지도 +12%p, 구매 경험 +10%p 신흥 다크호스. AI 쇼핑 사용 경험자 10명 중 6명, AI가 가장 도움 되는 영역은 '제품 장단점 비교(54.4%)'와 '쇼핑몰 최저가·혜택 비교(46.2%)'. 1인 브랜드 시사점: 네이버스마트스토어 + 네이버플러스스토어 노출 우선순위 재점검 + AI 챗봇/비교형 콘텐츠를 자사 채널에 심어두기.</div>
+          <a class="news-link" href="https://blog.opensurvey.co.kr/trendreport/online_shopping-2026/" target="_blank">📰 오픈서베이 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.05 · 국내</div>
+          <div class="news-headline">가정의 달 가전 선물 트렌드 — '실용·건강·소형가전' 10~20만 원대 강세, 주방가전 -40%</div>
+          <div class="news-summary">가전양판업계가 어린이날→어버이날→스승의날 '선물 시즌' 공략에 연중 최대 프로모션 비용 투입. 부모님 선물용 주방생활가전 최대 40% 할인. 인기 가격대는 10~15만 원 자동혈압계, 15~20만 원 소형 공기청정기 — '실용+건강+일상 밀착'. 식세기·전동칫솔은 직접 톱셀러로 호명되진 않았지만, '주방가전 40% 할인 = 식세기 입문 진입점' / '오랄비 쿠팡 브랜드데이 = 전동칫솔 가족 선물 진입점'으로 이번 시즌과 직접 연결.</div>
+          <a class="news-link" href="https://beforeforget.co.kr/479" target="_blank">📰 beforeforget →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 마케팅 뉴스 -->
+      <div class="sec" id="sec-marketing-6" data-sec="marketing">
+        <div class="sec-header">
+          <div class="sec-dot dot-marketing"></div>
+          <div class="sec-title">📣 마케팅 뉴스 (Marketing News)</div>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.05 · 글로벌 · 업계</div>
+          <div class="news-headline">The Drum Awards for Marketing Americas 2026 노미네이션 발표 — 42개 카테고리 + AI·커머스·컬처 8축</div>
+          <div class="news-summary">세계적 마케팅 어워드 더드럼이 'Awards for Marketing Americas 2026' 후보 공개. 42개 카테고리, 수백 건 노미네이션. 심사 기준의 핵심 축: AI, 커머스, 컬처 파트너십, 소셜 미디어, 라이브 익스피리언스, 데이터, 크리에이티비티, 측정 가능한 비즈니스 임팩트. 심사위원장 Snap Inc. CMO Grace Kao. 시상식은 6월 4일 뉴욕 Edison Ballroom. 의미: '카테고리'가 곧 '2026 마케팅 우선순위' 인덱스 — 1인 브랜드도 자체 KPI를 이 8축에 매핑하면 누락된 영역이 보임.</div>
+          <a class="news-link" href="https://www.thedrum.com/news/nominations-announced-for-the-drum-awards-for-marketing-americas-2026" target="_blank">📰 The Drum →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.05 · 국내 · 업계</div>
+          <div class="news-headline">아이보스 5월 마케팅 교육 라인업 — '넥스트커머스 2026: AI 전환' (5/14) + 인플루언서 트렌드 리포트</div>
+          <div class="news-summary">5/12 [Meta] 메시지 연결 광고 / 5/14 [넥스트커머스 2026] AI 전환: 정답없는 시대의 의사결정 / 5/19 [Meta] 어드밴티지+ 카탈로그 광고 / 5/26 하이서울기업협회×아이보스 브랜드 마케터 실무 트레이닝. 함께 공개된 '2026 2분기 인플루언서 마케팅 트렌드 리포트'도 무료 배포. AI 광고 자동화·인플루언서 마이크로 캐스팅 흐름이 5월 교육 라인업 공통분모.</div>
+          <a class="news-link" href="https://www.i-boss.co.kr/ab-7301" target="_blank">📰 아이보스 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.05 · 소비자 트렌드</div>
+          <div class="news-headline">트렌드모니터 2026 소비 전망 — '압축소비·의도적 안티스위치·나이무용론' 3축</div>
+          <div class="news-summary">대중 소비자가 일상의 모든 영역에서 '나에게 진짜 중요한 가치'에 집중하는 전략적 소비 모드로 이동. ① 압축소비 — 적게 사지만 깊이 경험(평균 구매 횟수↓ / 객단가·체류시간↑) ② 의도적 안티스위치 — 트렌드 대신 '불완전함의 진정성'을 일부러 선택, 새로 갈아타지 않고 쓰던 것을 더 깊이 ③ 나이무용론 — 결핍이 세대를 잇는다, 연령보다 처지·맥락이 같은 사람끼리 묶이는 클러스터. 심리축은 '위안 + 자기 정체성 + 현실에 발 딛은 낙관'. Cascade 한국 론칭 메시지에 직결 — '식세기 일상을 더 깊이 만들어주는 세제'로 포지셔닝하는 게 트렌드 결과 부합.</div>
+          <a class="news-link" href="https://www.trendmonitor.co.kr/tmweb/trend/allTrend/detail.do?bIdx=3319&code=0401&trendType=CKOREA" target="_blank">📰 트렌드모니터 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.05 · 소비자 트렌드</div>
+          <div class="news-headline">캐릿 — Z세대 '플랫폼별 트렌드가 다르다' 인식 부상 + '저소비' 흐름 동반</div>
+          <div class="news-summary">통합 '대유행' 시대가 끝나고 플랫폼별 미세 트렌드의 병렬 분포 시대로 진입. Z세대 메시지: "인스타는 핫플, 엑스는 밈… 플랫폼마다 유행하는 트렌드 분야가 달라요". 동반 흐름은 저소비 트렌드 — 불황이 길어지며 '즉흥보다 계산, 감각보다 확신'. 1인 브랜드는 채널마다 '이 플랫폼만의 톤·포맷'을 다르게 짜야 함 — 같은 영상 4채널 일괄 업로드 패턴은 효율이 빠르게 빠지는 중.</div>
+          <a class="news-link" href="https://www.careet.net/Content/CurationList?Id=13" target="_blank">📰 캐릿 →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 식기세척기 세제 -->
+      <div class="sec" id="sec-dish-6" data-sec="dish">
+        <div class="sec-header">
+          <div class="sec-dot dot-dish"></div>
+          <div class="sec-title">1. 식기세척기 세제 (Dishwasher Detergent)</div>
+        </div>
+
+        <p class="empty">이번 주 한국 단독 신규 뉴스 없음 — Cascade 6월 말 공식 론칭 전까지 정상 상태.</p>
+        <p class="empty" style="margin-top:8px;">📌 글로벌 캠페인 참고 — 5월 신규 글로벌 사례 없음. P&G가 2/11 발표한 Cascade 'Clean Machine' 체험 투어(플로리다 주박람회 → 'Reggie the Repairman' TV 캠페인 연계) + 3월 Finish Ultimate Quantum 흐름이 카테고리 톤앤매너로 살아있음. <a class="news-link" style="display:inline; margin-left:6px;" href="https://us.pg.com/newsroom/news-releases/Cascade-Launches-Clean-Machine-Experiential-Tour-Inviting-Consumers-Inside-the-Dishwasher-to-See-What-Clean-Really-Means-with-Cascade-Platinum-Plus/" target="_blank">P&G Newsroom →</a></p>
+        <p class="empty" style="margin-top:8px;">💡 시사점 — 위 커머스 동향의 '오픈서베이 AI 쇼핑 60%' + '트렌드모니터 압축소비' 두 데이터가 식세제 카테고리에 직결. AI 비교 콘텐츠로 '식세기 입문자가 첫 세제 고를 때 거치는 비교 검색'을 미리 점령해 두는 게 가장 빠른 SOV 확보 카드. 캐스케이드 론칭 콘텐츠 1번 자리에 'AI에게 물어본 식세기 첫 세제 고르는 법' 톤이 들어갈 만함.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 건전지 -->
+      <div class="sec" id="sec-battery-6" data-sec="battery">
+        <div class="sec-header">
+          <div class="sec-dot dot-battery"></div>
+          <div class="sec-title">2. 건전지 (Batteries)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;">💡 듀라셀×메시 'Messi Reboot' 글로벌 캠페인 후속(2026 월드컵 시즌 5~8월 본격 런 예정) 진입 시점이 가까워지는 중. 국내 듀라셀·에너자이저는 가정의 달 정기 노출 외 신규 캠페인 없음.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전기면도기 -->
+      <div class="sec" id="sec-shaver-6" data-sec="shaver">
+        <div class="sec-header">
+          <div class="sec-dot dot-shaver"></div>
+          <div class="sec-title">3. 전기면도기 (Electric Shavers)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;">💡 가정의 달 가전 선물 시즌이지만 자동혈압계·공기청정기·주방가전이 카테고리 톱을 차지하면서 전기면도기는 이번 시즌 노출 후순위. 브라운·필립스·파나소닉 본사 5월 신제품 발표 미확인. 가전양판점 어버이날 마지막 주 결산이 다음 주 나올 가능성 있음.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전동칫솔 -->
+      <div class="sec" id="sec-tooth-6" data-sec="tooth">
+        <div class="sec-header">
+          <div class="sec-dot dot-tooth"></div>
+          <div class="sec-title">4. 전동칫솔 (Electric Toothbrushes) ⭐ 이번 주 핵심</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.05.04 · 국내</div>
+          <div class="news-headline">필립스 소닉케어 '올 뉴 소닉케어 프로' 출시 (네이버 공식몰 단독)</div>
+          <div class="news-summary">새로운 특허 기술 '올 뉴 소닉 파워 시스템'(두 개 축이 반대 방향으로 움직여 진동을 상쇄·안정화) + 초정밀 광학 센서(압력 변화 감지). 분당 31,000회 음파 진동, 자체 임상 결과 수동 칫솔 대비 플라그 최대 10배·잇몸 건강 최대 7배 개선. 콤팩트/화이트닝/플러스/프로 4개 라인업 동시 출시. iF 디자인 어워드 2026 제품 디자인 부문 수상.</div>
+          <a class="news-link" href="https://www.betanews.net/article/view/beta202604290062" target="_blank">📰 베타뉴스 →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.05.04~ · 국내</div>
+          <div class="news-headline">필립스 소닉케어 '구강건강 캠페인' + 박수홍 '행복해다홍' 콜라보 + 30일 환불 보장 + 4.2만원 웰컴팩</div>
+          <div class="news-summary">방송인 박수홍 가족 일상 유튜브 '박수홍 행복해다홍' 채널을 통해 일상 속 양치 습관·음파전동칫솔 사용법 콘텐츠 공개. 5/10까지 네이버 공식몰 구매자에게 4.2만 원 상당 웰컴팩(A3 프리미엄 올인원 칫솔모 + S2 센서티브 초미세모) 증정. 추가로 '30일 전액 환불 보장 이벤트'로 진입 장벽 제거. 신제품 출시 + 인플루언서 + 체험 보장 + 한정 웰컴팩의 4단 동시 가동 패키지 — 1인 브랜드도 '신제품 = 단일 캠페인'이 아니라 '4단 동시 가동' 구조 학습 포인트.</div>
+          <a class="news-link" href="http://www.yakup.com/news/?mode=view&cat=12&cat2=124&cat3=0&nid=326813" target="_blank">📰 약업신문 →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04.20~05.07 · 국내</div>
+          <div class="news-headline">오랄비, 쿠팡 '가정의 달 브랜드데이' 참여 — 와우회원 가족 선물 카테고리 직타격</div>
+          <div class="news-summary">쿠팡 와우회원 대상 브랜드데이 40여 개 브랜드 라인업에 오랄비가 포함 — 쿠팡 + 어버이날 + 와우회원 + 단일 브랜드데이 4단 결합으로 가족 선물 카테고리에서 전동칫솔 노출 강화. 같은 시기 필립스 소닉케어는 네이버 공식몰 단독 출시 — '필립스=네이버 / 오랄비=쿠팡'으로 채널 점유 분기점이 이번 시즌 명확히 드러남.</div>
+          <a class="news-link" href="https://www.100ssd.co.kr/news/articleView.html?idxno=208188" target="_blank">📰 백세시대 →</a>
+        </div>
+
+        <p class="empty" style="margin-top:8px;">💡 시사점 — 이번 주 카테고리 핵심은 단연 필립스 소닉케어. 출시 채널이 일반 양판몰이 아닌 네이버 공식몰 단독이라는 점이 중요 — 위 오픈서베이 '네이버플러스스토어 +7.5%p' 트렌드와 정확히 맞물린 채널 결정. P&G 라인 마케터 입장에선 P&G 코리아 오랄비가 어떤 컨텐츠를 쿠팡 브랜드데이 당일 띄우는지 캡처/벤치마크해 둘 가치 있음.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 육포 -->
+      <div class="sec" id="sec-jerky-6" data-sec="jerky">
+        <div class="sec-header">
+          <div class="sec-dot dot-jerky"></div>
+          <div class="sec-title">5. 육포 (Jerky)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;">💡 Vol.5에서 다룬 Jack Link's × MrBeast 'WTF' ANZ 캠페인 마지막 단계(5/4부터 당첨자 30일 공개)가 진행 중이지만 신규 발표는 없음. 미국 본토(Vol.3 DUOS / Vol.4 Frito-Lay 도리토스 콜라보 외) 신규 발매 미확인. 국내 잭링크스 채널 신규 커뮤니케이션 미확인.</p>
+      </div>
+
+    </div><!-- /issue-body Vol.6 -->
+  </details>
+
+  <!-- ════════════ ISSUE Vol.5 ════════════ -->
+  <details class="issue"
+    data-secs="commerce marketing dish battery shaver tooth jerky"
+    data-text="커머스 동향 SSG닷컴 가정의 달 CARE 식기세척기 건조기 안마의자 알리익스프레스 5월 초이스데이 썸머 리프레쉬 알급날 가정의 달 마케팅 베이비페어 마케팅 뉴스 네이버 애드부스트 스크린 옥외광고 OOH 카카오페이 마음봉투 성수동 필오프 가정의 달 캠페인 현대차 배달의민족 처음 맛난 날 배민방학도시락 식기세척기 세스코 마이랩 올인원 3중 케어 항균 캐스케이드 Cascade 건전지 Duracell Messi 전기면도기 전동칫솔 Sonicare Oral-B 육포 Jack Link's MrBeast WTF 100만 달러 추첨 호주 뉴질랜드 ANZ">
+    <summary class="issue-summary">
+      <span class="toggle-icon">▶</span>
+      <div class="issue-meta">
+        <div class="issue-title">📋 Vol.5 — 2026년 5월 1주차</div>
+        <div class="issue-date">2026.04.27 – 2026.05.03 | 발행 2026.05.04</div>
+        <div class="issue-chips">
+          <span class="chip chip-commerce">🛒 커머스 동향</span>
+          <span class="chip chip-marketing">📣 마케팅 뉴스</span>
+          <span class="chip chip-dish">🍽️ 식기세척기</span>
+          <span class="chip chip-battery">🔋 건전지</span>
+          <span class="chip chip-shaver">🪒 전기면도기</span>
+          <span class="chip chip-tooth">🪥 전동칫솔</span>
+          <span class="chip chip-jerky">🥩 육포</span>
+        </div>
+      </div>
+    </summary>
+
+    <div class="issue-body" id="body-vol5">
+
+      <!-- 섹션 점프 바 -->
+      <div class="jump-bar">
+        <span>바로가기 →</span>
+        <a class="jump-btn" onclick="jumpTo('sec-commerce-5')">🛒 커머스</a>
+        <a class="jump-btn" onclick="jumpTo('sec-marketing-5')">📣 마케팅</a>
+        <a class="jump-btn" onclick="jumpTo('sec-dish-5')">🍽️ 식기세척기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-battery-5')">🔋 건전지</a>
+        <a class="jump-btn" onclick="jumpTo('sec-shaver-5')">🪒 전기면도기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-tooth-5')">🪥 전동칫솔</a>
+        <a class="jump-btn" onclick="jumpTo('sec-jerky-5')">🥩 육포</a>
+      </div>
+
+      <!-- ▸ 커머스 동향 -->
+      <div class="sec" id="sec-commerce-5" data-sec="commerce">
+        <div class="sec-header">
+          <div class="sec-dot dot-commerce"></div>
+          <div class="sec-title">🛒 커머스 동향 (Commerce Trends)</div>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.05.01 · 국내</div>
+          <div class="news-headline">SSG닷컴 가정의 달 트렌드 'CARE' — 식세기·건조기 판매 +960%, 안마의자 +502%</div>
+          <div class="news-summary">SSG닷컴 4/21~28 선물 카테고리 분석. 키워드는 'CARE'(Care·Affordable luxury·Relief·Enduring value). 가사 부담을 덜어주는 식세기·건조기 +960%, 안마의자 +502% — '해방(Relief)' 카테고리 폭증. 자급제폰·노트북 '실속 가전' + 위스키·향수 '합리적 럭셔리'도 동반 성장. 캐스케이드 6월 말 론칭 직전, 한국 식세기 보유 가구가 빠르게 늘고 있다는 시그널. 1차 타깃을 '식세기 신규 입문자'로 잡는 게 합리적.</div>
+          <a class="news-link" href="https://www.khan.co.kr/article/202605011500001/amp" target="_blank">📰 경향신문 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.05.01~ · 국내</div>
+          <div class="news-headline">알리익스프레스 5월 4단 프로모션 캘린더 — 5/1 초이스데이로 시작</div>
+          <div class="news-summary">초이스데이(5/1~7, 최대 60% + 코드 추가 할인) → 썸머 리프레쉬(5/10~15) → 5월 프로모션 세일(5/18~22) → 알급날(5/23~25). 4월 봄격쇼핑(4/26~28)에서 5월로 끊김 없이 바통터치. 국내 셀러는 5월 셋째주(가정의 달 절정) 이전 자체 선제 프로모션 1~2개 끼워야 알리·테무 흡수력에 밀리지 않음.</div>
+          <a class="news-link" href="https://alicouponkorea.com/aliexpress-promotion-may-2026/" target="_blank">📰 알리쿠폰코리아 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.04.30~05.02 · 국내</div>
+          <div class="news-headline">유통가 가정의 달 마케팅 본격화 — 장난감·아동복·건강식품 3대 축</div>
+          <div class="news-summary">대형마트·백화점·온라인몰이 4/30~5/2 사이 가정의 달 행사 일제히 시작. 장난감 전문점 할인+상품권, 백화점 베이비페어, 온라인몰 건강식품·뷰티 디바이스 할인전. 단순 할인보다 '쓰임새 명확한 묶음 패키지'가 더 잘 팔리는 'C.A.R.E.' 흐름.</div>
+          <a class="news-link" href="https://news.ikbc.co.kr/news/article/view/kbc202605020030" target="_blank">📰 KBC →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 마케팅 뉴스 -->
+      <div class="sec" id="sec-marketing-5" data-sec="marketing">
+        <div class="sec-header">
+          <div class="sec-dot dot-marketing"></div>
+          <div class="sec-title">📣 마케팅 뉴스 (Marketing News)</div>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.04.28 · 국내 · 업계</div>
+          <div class="news-headline">네이버 '애드부스트 스크린' 옥외광고 — 오피스빌딩 로비까지 확대 + AI 소재 자동 최적화</div>
+          <div class="news-summary">네이버 디지털 OOH 상품 '애드부스트 스크린'의 노출 매체를 영화관·도심 LED·택시·식당 키오스크에 더해 오피스빌딩 로비까지 확장. 핵심은 AI 소재 자동 최적화 — 한 장 이미지에서 세로/가로/짧은 영상 자동 생성, 1인 브랜드·소상공인의 OOH 진입 장벽 크게 낮춤. 연내 '영업장 주변 매체 타깃' 별도 상품 출시 예정. 'AI + DOOH'가 드디어 1인 마케터 손에 닿는 도구가 됨.</div>
+          <a class="news-link" href="https://www.i-boss.co.kr/ab-2877-17187" target="_blank">📰 아이보스 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.04 말 · 국내 · 업계</div>
+          <div class="news-headline">카카오페이 '지금 만나러 가세요' — 성수동 4,000개 '마음봉투' 필오프 OOH</div>
+          <div class="news-summary">카카오페이 가정의 달 캠페인. 성수동 거리 벽면에 봉투 4,000개 부착, 봉투 안에 부모님께 마음을 전할 편지지 + 카카오페이 오프라인 첫 결제 50% 할인 쿠폰. 봉투가 모두 사라진 자리에 "카카오페이 하지 마세요. 지금 만나러 가세요" 메시지가 드러나는 자기 부정형 카피 구조. 1인 브랜드도 '오프라인 거점 + 가져갈 굿즈 + 자기 비틀기 카피' 미니 버전으로 변형 가능.</div>
+          <a class="news-link" href="https://gogumafarm.kr/%EA%B0%80%EC%A0%95%EC%9D%98-%EB%8B%AC%EC%97%90-%ED%95%A0%EC%9D%B8%EB%B3%B4%EB%8B%A4-%EA%B0%90%EB%8F%99%EC%9D%84-%ED%83%9D%ED%95%9C-%EB%B8%8C%EB%9E%9C%EB%93%9C%EB%93%A4-%EC%96%B4%EB%A6%B0%EC%9D%B4/" target="_blank">📰 고구마팜 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.04 말 · 소비자 트렌드</div>
+          <div class="news-headline">가정의 달 캠페인 — '할인'에서 '감동·경험' 설계로 무게 이동 (현대차/배민/카카오페이 3사례)</div>
+          <div class="news-summary">고구마팜이 정리한 2026 가정의 달 사례 공통점: 할인보다 '경험·감동' 설계. ① 현대차 — 어린이에게 '미래 고객 경험', 부모에게 '가족 친화 브랜드' 인식, ② 배민 '처음 맛난 날 by 배민방학도시락' — 강원도 삼척 산골 마을에 푸드트럭 5대로 인기 외식 5개 브랜드(스텔라떡볶이·요아정 등) 직배달, 영상 조회수 880만+, ③ 카카오페이 마음봉투. 3사례 모두 '메시지 → 고객 행동 유도 실물 경험'으로 무게중심 이동. Vol.4 어스데이 트렌드와 같은 흐름이 5월 가정의 달에도 반복 중.</div>
+          <a class="news-link" href="http://www.consumerwide.com/news/articleView.html?idxno=65726" target="_blank">📰 컨슈머와이드(배민 사례) →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 식기세척기 세제 -->
+      <div class="sec" id="sec-dish-5" data-sec="dish">
+        <div class="sec-header">
+          <div class="sec-dot dot-dish"></div>
+          <div class="sec-title">1. 식기세척기 세제 (Dishwasher Detergent)</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04.29 · 국내</div>
+          <div class="news-headline">세스코 마이랩 '식기세척기 세제 올인원' — 세정+헹굼+항균 3중 케어 신제품</div>
+          <div class="news-summary">방역 전문기업 세스코의 위생 케어 브랜드 마이랩이 식기세척기 세제 올인원 필름형 신제품을 4/29 국내 매체 다수에 일제히 게재. 셀링 포인트는 '세정·헹굼·항균 3중 케어'(대장균·살모넬라·황색포도상구균 99.9% 항균 시험 완료) + 냄새 잡는 케어. 어린이 보호 포장. "세정만으로는 부족, 위생까지" 메시지로 카테고리 가치 끌어올린 캐스케이드 한국 론칭 시 직접 비교될 신규 진입자.</div>
+          <a class="news-link" href="https://www.koreadaily.com/article/20260429222651683" target="_blank">📰 미주중앙일보 →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.05.01 · 국내</div>
+          <div class="news-headline">SSG닷컴 식기세척기 판매 +960% — 세제 카테고리 잠재 수요 동반 확대 시그널</div>
+          <div class="news-summary">위 커머스 동향 참고. 가정의 달 식세기 본체 +960% 폭증 → 세제 신규 구매 수요 동반 확대 가능. 캐스케이드 6월 말 론칭 시 '식세기 입문자용 가이드 콘텐츠 + 첫 구매 묶음 패키지'가 가장 빠른 트래픽 확보 카드.</div>
+          <a class="news-link" href="https://plus.hankyung.com/apps/newsinside.view?aid=2026050110071" target="_blank">📰 한경 →</a>
+        </div>
+
+        <p class="empty" style="margin-top:8px;">💡 Cascade 한국 단독 뉴스는 이번 주에도 없음 — 6월 말 론칭 전까지 정상 상태.</p>
+        <p class="empty" style="margin-top:8px;">📌 글로벌 캠페인 참고 — 이번 주 신규 글로벌 사례 없음. Vol.4 P&G FY26 Q3 / Cascade 'Clean Machine' 투어 + Reggie 캐릭터 / Finish Ultimate Quantum(3월) 흐름이 카테고리 톤앤매너로 살아있음.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 건전지 -->
+      <div class="sec" id="sec-battery-5" data-sec="battery">
+        <div class="sec-header">
+          <div class="sec-dot dot-battery"></div>
+          <div class="sec-title">2. 건전지 (Batteries)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;">💡 Vol.3 Duracell × 메시 'Messi Reboot' 글로벌 캠페인 후속(2026 월드컵 시즌 본격 런 5~8월) 시작 시점이 다가오는 중. 국내 듀라셀·에너자이저는 가정의 달 정기 프로모션 외 신규 캠페인 없음.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전기면도기 -->
+      <div class="sec" id="sec-shaver-5" data-sec="shaver">
+        <div class="sec-header">
+          <div class="sec-dot dot-shaver"></div>
+          <div class="sec-title">3. 전기면도기 (Electric Shavers)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전동칫솔 -->
+      <div class="sec" id="sec-tooth-5" data-sec="tooth">
+        <div class="sec-header">
+          <div class="sec-dot dot-tooth"></div>
+          <div class="sec-title">4. 전동칫솔 (Electric Toothbrushes)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;">💡 Philips Sonicare 'Feel the Care' 5700~7300(3/5 글로벌)·Oral-B iO 시리즈 모두 이번 주 한국 공식 커뮤니케이션 추가 없음. 가정의 달 어버이날 선물 카테고리에서 전동칫솔 노출이 늘 시점이지만 본사 캠페인 미확인.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 육포 -->
+      <div class="sec" id="sec-jerky-5" data-sec="jerky">
+        <div class="sec-header">
+          <div class="sec-dot dot-jerky"></div>
+          <div class="sec-title">5. 육포 (Jerky)</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04.28~05.04 · 호주·뉴질랜드</div>
+          <div class="news-headline">Jack Link's × MrBeast 'WTF' 100만 달러 추첨 — 응모 마감(4/28) → 추첨일(4/30) → 당첨자 공개(5/4~)</div>
+          <div class="news-summary">ANZ 한정 'W.T.F!(What's The Flavour?!)' 캠페인의 클라이맥스 단계. 4/28 23:59(AEST) 응모 마감 → 4/30 10:00(AEST) 메이저 프라이즈 추첨 → 5/4부터 당첨자 이니셜·성·우편번호를 공식 사이트에 30일간 게시. 1월 출시 → 4월 정답 순차 공개 → 4월 말 마감 → 5월 초 공개로 이어진 4개월짜리 통합 캠페인의 마지막 단계. '한정판 + 미스터리 + 게이미피케이션 + 거액 스위프테이크스 + 클라이맥스 공개일' 5단 빌드업 — 1인 브랜드도 '월별 미니 빌드업'으로 축소 변형 가능.</div>
+          <a class="news-link" href="https://www.jacklinks.com.au/wtfpromo" target="_blank">📰 Jack Link's Australia 공식 →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04 · 호주</div>
+          <div class="news-headline">Mediaweek — "Jack Link's & MrBeast가 비프저키를 100만 달러 추측 게임으로 바꿨다"</div>
+          <div class="news-summary">캠페인의 글로벌 미디어 평가. Woolworths·7-Eleven·주유소·편의점 한정 발매, QR 스캔 → 정답 입력 → 100만 달러 추첨 응모. 한정 미스터리 발매 + 글로벌 크리에이터 IP + 거액 추첨이 식음료 카테고리에서도 통한다는 검증.</div>
+          <a class="news-link" href="https://www.mediaweek.com.au/mrbeast-and-jack-links-turn-beef-jerky-into-a-million-dollar-guessing-game/" target="_blank">📰 Mediaweek →</a>
+        </div>
+
+        <p class="empty" style="margin-top:8px;">📌 미국 본토 — Vol.3 DUOS / Vol.4 Jack Link's × Frito-Lay 도리토스 콜라보(2/24) 외 이번 주 신규 발매·캠페인 없음. 국내 잭링크스 채널 신규 커뮤니케이션 미확인.</p>
+      </div>
+
+    </div><!-- /issue-body -->
+  </details>
+
+  <!-- ════════════ ISSUE Vol.4 ════════════ -->
+  <details class="issue"
+    data-secs="commerce marketing dish battery shaver tooth jerky"
+    data-text="커머스 동향 P&G FY26 3분기 Cascade Fabric Home Care organic 점유율 G마켓 셀러 수익형 알리익스프레스 봄격쇼핑 알급날 마케팅 뉴스 Earth Day 어스데이 Tesla Nykaa 캐릿 careet 검색량 Z세대 AI 크리에이터 김햄찌 식기세척기 Cascade P&G 건전지 듀라셀 에너자이저 전기면도기 전동칫솔 육포 Jack Link's MrBeast WTF 비밀 플레이버">
+    <summary class="issue-summary">
+      <span class="toggle-icon">▶</span>
+      <div class="issue-meta">
+        <div class="issue-title">📋 Vol.4 — 2026년 4월 4주차</div>
+        <div class="issue-date">2026.04.20 – 2026.04.26 | 발행 2026.04.27</div>
+        <div class="issue-chips">
+          <span class="chip chip-commerce">🛒 커머스 동향</span>
+          <span class="chip chip-marketing">📣 마케팅 뉴스</span>
+          <span class="chip chip-dish">🍽️ 식기세척기</span>
+          <span class="chip chip-battery">🔋 건전지</span>
+          <span class="chip chip-shaver">🪒 전기면도기</span>
+          <span class="chip chip-tooth">🪥 전동칫솔</span>
+          <span class="chip chip-jerky">🥩 육포</span>
+        </div>
+      </div>
+    </summary>
+
+    <div class="issue-body" id="body-vol4">
+
+      <!-- 섹션 점프 바 -->
+      <div class="jump-bar">
+        <span>바로가기 →</span>
+        <a class="jump-btn" onclick="jumpTo('sec-commerce-4')">🛒 커머스</a>
+        <a class="jump-btn" onclick="jumpTo('sec-marketing-4')">📣 마케팅</a>
+        <a class="jump-btn" onclick="jumpTo('sec-dish-4')">🍽️ 식기세척기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-battery-4')">🔋 건전지</a>
+        <a class="jump-btn" onclick="jumpTo('sec-shaver-4')">🪒 전기면도기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-tooth-4')">🪥 전동칫솔</a>
+        <a class="jump-btn" onclick="jumpTo('sec-jerky-4')">🥩 육포</a>
+      </div>
+
+      <!-- ▸ 커머스 동향 -->
+      <div class="sec" id="sec-commerce-4" data-sec="commerce">
+        <div class="sec-header">
+          <div class="sec-dot dot-commerce"></div>
+          <div class="sec-title">🛒 커머스 동향 (Commerce Trends)</div>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.04.24 · 글로벌</div>
+          <div class="news-headline">P&G FY26 Q3 발표 — Fabric & Home Care organic +3%, Home Care 점유율 +0.3%p</div>
+          <div class="news-summary">전사 매출 $21.2B(+7%), organic +3%. Cascade가 속한 Fabric & Home Care 사업부 organic +3%, 그중 Home Care는 유럽·북미 가격 인상과 유럽 볼륨 증가로 mid-single digit 성장 + 시장 점유율 +0.3%p. 회사 전체 볼륨이 +2%로 1년 만에 처음 증가. FY26 EPS 가이던스(1~6%) 유지. Cascade 한국 6월 말 론칭 직전 카테고리 모멘텀 살아있는 시그널.</div>
+          <a class="news-link" href="https://www.pginvestor.com/news/news-details/2026/PG-Announces-Fiscal-Year-2026-Third-Quarter-Results/default.aspx" target="_blank">📰 P&G IR →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.04.21 · 국내</div>
+          <div class="news-headline">G마켓 셀러 66만 명 — '월 5천만원 이상 수익형 셀러' 전년비 +3%</div>
+          <div class="news-summary">3월 G마켓 등록 셀러 66만 명, 전년 동월비 +3.6만 명. 알리·테무 영향으로 중소 셀러 진입 장벽이 낮아진 동시에 고매출 구간 셀러 군이 견고해지는 양극화. 1인 브랜드는 G마켓 셀러 지원 프로그램(CRM·광고 패키지) 변화 한 번 점검할 시점.</div>
+          <a class="news-link" href="https://biz.newdaily.co.kr/site/data/html/2026/04/21/2026042100029.html" target="_blank">📰 뉴데일리 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.04.26 · 국내</div>
+          <div class="news-headline">알리익스프레스 4월 '봄격쇼핑' 4.26~28 — 4주 연속 프로모션 캘린더</div>
+          <div class="news-summary">브랜드 특가전(20~24일) → 알급날 세일(23~25일) → 봄격쇼핑(26~28일)으로 4월 한 달간 거의 매주 프로모션이 겹쳐 굴러가는 구조. 국내 셀러도 자체 캘린더 프로모션 빈도와 콘텐츠 페이스를 빠르게 끌어올려야 하는 상황.</div>
+          <a class="news-link" href="https://alicouponkorea.com/aliexpress-promotion-april-2026/" target="_blank">📰 알리쿠폰코리아 →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 마케팅 뉴스 -->
+      <div class="sec" id="sec-marketing-4" data-sec="marketing">
+        <div class="sec-header">
+          <div class="sec-dot dot-marketing"></div>
+          <div class="sec-title">📣 마케팅 뉴스 (Marketing News)</div>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.04.22 · 글로벌 · 업계</div>
+          <div class="news-headline">Earth Day 2026 — 'Our Power, Our Planet' / '약속 아닌 행동' 운영형 캠페인 부상</div>
+          <div class="news-summary">올해 어스데이 글로벌 테마는 'Our Power, Our Planet'(재생에너지 전환). 메시지 위주 공익광고에서 '고객 행동을 유도하는 실물 프로그램'으로 무게 이동. Tesla(차량+솔라+파워월+옵티머스 묶은 홈에너지 에코시스템 상담), Nykaa 인도(14개 매장 빈 용기 회수 'Recycle and Rewards'). 한국 1인 브랜드도 일회성 SNS 대신 리유저블 패키지·리필 스테이션·반납 리워드 같은 운영형 그린 자산이 다음 단계.</div>
+          <a class="news-link" href="https://www.socialsamosa.com/topical-spot/brands-sustainable-planet-world-earth-day-11754088" target="_blank">📰 Social Samosa →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.04 · 소비자 트렌드</div>
+          <div class="news-headline">캐릿 — 한 달 만에 검색량 700% 폭증한 Z세대 인기템 3가지</div>
+          <div class="news-summary">네이버 검색량 970→8,300건(+755%) 단기 폭증 신규 Z세대 관심사 3종을 캐릿이 정리. AI 콘텐츠 피로감 속에서 '검색량 단기 스파이크' 자체가 마케터에게 가장 빠른 트렌드 시그널. 키워드 모니터링 자동화(네이버 데이터랩 + 구글 트렌드 + 캐릿 위클리)를 1인 브랜드 루틴화할 시점.</div>
+          <a class="news-link" href="https://www.careet.net/1836" target="_blank">📰 캐릿 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.04 · 소비자 트렌드</div>
+          <div class="news-headline">캐릿 — "AI 콘텐츠로 퇴사할 수 있을까?" AI 크리에이터 수익화 가이드</div>
+          <div class="news-summary">AI 크리에이터 '김햄찌'의 2025 유튜브 인기 크리에이터 TOP 10 진입을 시작점으로, 누적 조회수 3억+ 제작자 / 구글·CJ 협업 현직 AI 크리에이터 5인의 워크플로우(프롬프트 → 콘텐츠 → 수익화)를 정리. 1인 브랜드 마케터의 콘텐츠 생산 단가를 낮추면서 톤앤매너를 유지하는 실전 케이스로 활용 가능.</div>
+          <a class="news-link" href="https://www.careet.net/1858" target="_blank">📰 캐릿 →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 식기세척기 세제 -->
+      <div class="sec" id="sec-dish-4" data-sec="dish">
+        <div class="sec-header">
+          <div class="sec-dot dot-dish"></div>
+          <div class="sec-title">1. 식기세척기 세제 (Dishwasher Detergent)</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04.24 · 글로벌</div>
+          <div class="news-headline">Cascade 모회사 P&G FY26 Q3 — 한국 론칭 직전 카테고리 모멘텀 점검</div>
+          <div class="news-summary">캐스케이드 단독 캠페인 발표는 없었으나, 4/24 P&G 3분기 결과에서 Fabric & Home Care organic +3%, Home Care 부문 mid-single digit 성장 + 점유율 +0.3%p 상승. 캐스케이드가 속한 카테고리는 가격 인상이 통하는 시장(유럽·북미 사례). 한국 6월 말 론칭 시 '프리미엄 가격 포지셔닝 + 식세기 쓰임 교육 캠페인' 조합이 본사 차원에서 검증된 노선.</div>
+          <a class="news-link" href="https://us.pg.com/newsroom/news-releases/PG-Announces-Fiscal-Year-2026-Third-Quarter-Results/" target="_blank">📰 P&G Newsroom →</a>
+        </div>
+
+        <p class="empty" style="margin-top:8px;">💡 Cascade 한국 시장 단독 뉴스는 이번 주에도 없음 — 6월 말 론칭 전까지 정상 상태.</p>
+        <p class="empty" style="margin-top:8px;">📌 글로벌 캠페인 참고 — 이번 주 신규 글로벌 사례 없음. Vol.3에서 정리한 Finish 'The Right Way to Dishwash'(인도, 4/8) / Cascade 'Clean Machine' 익스피리언셜 투어(2월~) 흐름이 카테고리 톤앤매너로 살아있음.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 건전지 -->
+      <div class="sec" id="sec-battery-4" data-sec="battery">
+        <div class="sec-header">
+          <div class="sec-dot dot-battery"></div>
+          <div class="sec-title">2. 건전지 (Batteries)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;">💡 Vol.3 Duracell × 메시 'Messi Reboot'(4/15) 후속 신규 집행물 미확인. 국내 듀라셀·에너자이저는 코스트코·이마트 4월 정기 프로모션 외 신규 캠페인 없음.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전기면도기 -->
+      <div class="sec" id="sec-shaver-4" data-sec="shaver">
+        <div class="sec-header">
+          <div class="sec-dot dot-shaver"></div>
+          <div class="sec-title">3. 전기면도기 (Electric Shavers)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전동칫솔 -->
+      <div class="sec" id="sec-tooth-4" data-sec="tooth">
+        <div class="sec-header">
+          <div class="sec-dot dot-tooth"></div>
+          <div class="sec-title">4. 전동칫솔 (Electric Toothbrushes)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;">💡 Philips Sonicare 'Feel the Care' 5000~7300(3/5 글로벌)·Oral-B iO 시리즈 모두 이번 주 한국 공식 커뮤니케이션 추가 없음. 6~7월 어버이날·결혼 시즌 전후 캠페인 가능성 모니터링 중.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 육포 -->
+      <div class="sec" id="sec-jerky-4" data-sec="jerky">
+        <div class="sec-header">
+          <div class="sec-dot dot-jerky"></div>
+          <div class="sec-title">5. 육포 (Jerky)</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04 · 호주·뉴질랜드</div>
+          <div class="news-headline">Jack Link's × MrBeast 'WTF' 콜라보 — 4월 비밀 플레이버 정답 공개 시작</div>
+          <div class="news-summary">1월 ANZ에서 한정판으로 공개한 'W.T.F!(What's The Flavour?!)' 라인의 비밀 플레이버 정답이 4월부터 순차 공개. 패키지 QR로 정답을 맞히면 100만 달러 추첨에 응모. '미스터리 플레이버 + 글로벌 크리에이터 IP + 거액 스위프테이크스' 3종 결합이 식음료 카테고리에서도 통하는 사례. 1인 브랜드도 '미니 사이즈 + 비밀 시즈닝 + SNS 챌린지' 축소 변형 가능.</div>
+          <a class="news-link" href="https://www.sweepstakeslovers.com/cash/jack-links-x-mrbeast-sweepstakes/" target="_blank">📰 Sweepstakes Lovers →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.01.12 · 호주·뉴질랜드</div>
+          <div class="news-headline">Jack Link's & MrBeast WTF 라인업 ANZ 런칭 (배경 자료)</div>
+          <div class="news-summary">MrBeast 첫 CPG 파트너십. Grass Fed Beef WTF 제품 3종(저키 2 + 미트스틱 1)을 ANZ 한정 출시. 4월 정답 공개 라운드는 이 기획의 클라이맥스.</div>
+          <a class="news-link" href="https://insidefmcg.com.au/2026/01/12/jack-links-and-mrbeast-to-launch-limited-edition-range-in-anz/" target="_blank">📰 Inside FMCG →</a>
+        </div>
+
+        <p class="empty" style="margin-top:8px;">📌 미국 본토는 Vol.3에 게재한 DUOS 'Sour Cream & Onion'(4/16) 외 이번 주 신규 발매·캠페인 없음. 국내 잭링크스 채널 신규 커뮤니케이션 미확인.</p>
+      </div>
+
+    </div><!-- /issue-body -->
+  </details>
+
+  <!-- ════════════ ISSUE Vol.3 ════════════ -->
+  <details class="issue"
+    data-secs="commerce marketing dish battery shaver tooth jerky"
+    data-text="커머스 동향 네이버플러스 스토어 MAU 777만 탈쿠팡 쿠팡이츠 배달의민족 배민 마케팅 뉴스 레뷰 인플루언서 마케팅 2분기 K-뷰티 장기 파트너십 키덜트 크리에이터 커머스 저출산 식기세척기 Cascade Finish Ayushmann Khurrana 건전지 Duracell Messi Reboot 리오넬 메시 월드컵 Power Boost 전기면도기 전동칫솔 Sonicare Oral-B 육포 Jack Link's DUOS Sour Cream Onion ANZ Feed Your Wild Side">
+    <summary class="issue-summary">
+      <span class="toggle-icon">▶</span>
+      <div class="issue-meta">
+        <div class="issue-title">📋 Vol.3 — 2026년 4월 3주차</div>
+        <div class="issue-date">2026.04.13 – 2026.04.19 | 발행 2026.04.20</div>
+        <div class="issue-chips">
+          <span class="chip chip-commerce">🛒 커머스 동향</span>
+          <span class="chip chip-marketing">📣 마케팅 뉴스</span>
+          <span class="chip chip-dish">🍽️ 식기세척기</span>
+          <span class="chip chip-battery">🔋 건전지</span>
+          <span class="chip chip-shaver">🪒 전기면도기</span>
+          <span class="chip chip-tooth">🪥 전동칫솔</span>
+          <span class="chip chip-jerky">🥩 육포</span>
+        </div>
+      </div>
+    </summary>
+
+    <div class="issue-body" id="body-vol3">
+
+      <!-- 섹션 점프 바 -->
+      <div class="jump-bar">
+        <span>바로가기 →</span>
+        <a class="jump-btn" onclick="jumpTo('sec-commerce-3')">🛒 커머스</a>
+        <a class="jump-btn" onclick="jumpTo('sec-marketing-3')">📣 마케팅</a>
+        <a class="jump-btn" onclick="jumpTo('sec-dish-3')">🍽️ 식기세척기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-battery-3')">🔋 건전지</a>
+        <a class="jump-btn" onclick="jumpTo('sec-shaver-3')">🪒 전기면도기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-tooth-3')">🪥 전동칫솔</a>
+        <a class="jump-btn" onclick="jumpTo('sec-jerky-3')">🥩 육포</a>
+      </div>
+
+      <!-- ▸ 커머스 동향 -->
+      <div class="sec" id="sec-commerce-3" data-sec="commerce">
+        <div class="sec-header">
+          <div class="sec-dot dot-commerce"></div>
+          <div class="sec-title">🛒 커머스 동향 (Commerce Trends)</div>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.04.19 · 국내</div>
+          <div class="news-headline">네이버플러스 스토어 MAU 777만 돌파 — "탈쿠팡" 흐름 1년 안착</div>
+          <div class="news-summary">AI 쇼핑 에이전트 + N배송·컬리 협업을 무기로 쿠팡 중심 시장 구도에 균열. 네이버 커머스 매출 전년비 26.2% 증가. 쿠팡 유출 사태 이후 "탈팡" 흐름을 흡수한 유일 플랫폼 평가.</div>
+          <a class="news-link" href="https://www.ddaily.co.kr/page/view/2026041821194230904" target="_blank">📰 디지털데일리 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.04.16 · 국내</div>
+          <div class="news-headline">쿠팡이츠 3월 MAU 30.6%↑, 배민은 2400만명 '신기록'</div>
+          <div class="news-summary">쿠팡이츠 1,355만 명 (전년비 +30.6%). 개인정보 유출 보상쿠폰(5만원, 4/15 만료) 소진 수요 유입 결과. 배민 2,408만 명으로 역대 최고.</div>
+          <a class="news-link" href="https://www.consumernews.co.kr/news/articleView.html?idxno=754031" target="_blank">📰 소비자가 만드는 신문 →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 마케팅 뉴스 -->
+      <div class="sec" id="sec-marketing-3" data-sec="marketing">
+        <div class="sec-header">
+          <div class="sec-dot dot-marketing"></div>
+          <div class="sec-title">📣 마케팅 뉴스 (Marketing News)</div>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.04.15 · 업계</div>
+          <div class="news-headline">레뷰 인플루언서 마케팅 트렌드 리포트 2026 2Q 공개</div>
+          <div class="news-summary">핵심 키워드 "검색은 AI, 추천은 SNS". '응답하라 2016' 과거 컨셉 따라하기, AI 콘텐츠 피로, K-뷰티 세분화(성분·부위·텍스처), 장기 파트너십 중심 협업이 2Q 흐름. 단발 콜라보보다 시리즈형 장기 파트너십 설계 권장.</div>
+          <a class="news-link" href="https://www.i-boss.co.kr/ab-3208-1713" target="_blank">📰 아이보스 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.04.20 · 소비자 트렌드</div>
+          <div class="news-headline">저출산 시대 소비 판도 변화 — 키덜트·크리에이터 커머스 부상</div>
+          <div class="news-summary">유아동 시장 축소를 대체하는 흐름으로 성인 장난감(키덜트) 확산, 크리에이터-소비자 신뢰 기반 쌍방향 소통에 기반한 크리에이터 커머스가 패션·유통 새 엔진. 단방향 광고 예산을 크리에이터 커뮤니티 투자로 재분배 필요.</div>
+          <a class="news-link" href="https://www.kjob.news/news/480381" target="_blank">📰 전국인력신문 →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 식기세척기 세제 -->
+      <div class="sec" id="sec-dish-3" data-sec="dish">
+        <div class="sec-header">
+          <div class="sec-dot dot-dish"></div>
+          <div class="sec-title">1. 식기세척기 세제 (Dishwasher Detergent)</div>
+        </div>
+
+        <p class="empty">이번 주 한국 시장 관련 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;">💡 Cascade 한국 론칭은 2026년 6월 말 예정 — 현재까지는 한국 관련 뉴스가 없는 것이 정상.</p>
+        <p class="empty" style="margin-top:8px;">📌 글로벌 캠페인 참고: Finish "Dishes" 글로벌 리포지셔닝(4/6), Finish 인도 Ayushmann Khurrana 앰배서더(4/8) — 7일 초과분이라 본문 제외. 한국 론칭 크리에이티브 벤치마킹 차원에서 별도 모니터링 권장.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 건전지 -->
+      <div class="sec" id="sec-battery-3" data-sec="battery">
+        <div class="sec-header">
+          <div class="sec-dot dot-battery"></div>
+          <div class="sec-title">2. 건전지 (Batteries)</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04.15 · 글로벌</div>
+          <div class="news-headline">Duracell × 리오넬 메시 'Messi Reboot' 글로벌 캠페인 런칭</div>
+          <div class="news-summary">2026 월드컵 앞두고 메시를 글로벌 앰배서더로 내세운 30초 시네마틱 TVC 공개. TV·스트리밍·소셜·월드컵 중계 집행. 메시 시그니처 타투를 새긴 한정판 배터리 + 5~8월 서명 굿즈 스위프테이크스 연동. 배터리 카테고리의 '기술 차별화(Power Boost) 스토리텔링' 대표 사례.</div>
+          <a class="news-link" href="https://adage.com/creativity/work/aa-duracell-messi-reboot/" target="_blank">📰 Ad Age →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04.15 · 글로벌</div>
+          <div class="news-headline">Variety, Duracell–Messi 파트너십 단독 공개</div>
+          <div class="news-summary">Power Boost 기술을 "엘리트 축구 퍼포먼스"와 연결하는 포지셔닝. Fox·Telemundo 월드컵 중계에서 스페인어 버전도 함께 집행.</div>
+          <a class="news-link" href="https://variety.com/2026/tv/news/duracell-lionel-messi-power-world-cup-1236722047/" target="_blank">📰 Variety →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04.15 · 글로벌</div>
+          <div class="news-headline">한정판 "메시 타투" 배터리 패키지 공개</div>
+          <div class="news-summary">Duracell 역사상 최초로 파트너의 타투 디자인을 제품 자체에 각인. 배터리 구매 시 메시 친필 굿즈 응모 기회.</div>
+          <a class="news-link" href="https://www.mediapost.com/publications/article/414281/duracell-debuts-batteries-with-messis-tattoos.html" target="_blank">📰 MediaPost →</a>
+        </div>
+
+        <p class="empty" style="margin-top:8px;">📌 국내 듀라셀/에너자이저 관련 신규 뉴스는 이번 주 없음.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전기면도기 -->
+      <div class="sec" id="sec-shaver-3" data-sec="shaver">
+        <div class="sec-header">
+          <div class="sec-dot dot-shaver"></div>
+          <div class="sec-title">3. 전기면도기 (Electric Shavers)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전동칫솔 -->
+      <div class="sec" id="sec-tooth-3" data-sec="tooth">
+        <div class="sec-header">
+          <div class="sec-dot dot-tooth"></div>
+          <div class="sec-title">4. 전동칫솔 (Electric Toothbrushes)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;">💡 Philips Sonicare 'Feel the Care' 5000~7300 시리즈(3/5 발표)의 한국 출시 시점 지속 모니터링 중. Oral-B는 4월 중순 태국에서 iO 시리즈 PR 이벤트('The Future of Brushing') 진행 — 한국 공식 커뮤니케이션은 미확인.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 육포 -->
+      <div class="sec" id="sec-jerky-3" data-sec="jerky">
+        <div class="sec-header">
+          <div class="sec-dot dot-jerky"></div>
+          <div class="sec-title">5. 육포 (Jerky)</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04.16 · 미국</div>
+          <div class="news-headline">Jack Link's, DUOS 신규 플레이버 'Sour Cream & Onion' 출시</div>
+          <div class="news-summary">DUOS 네 번째 플레이버. Circle K·Wawa·Pilot Flying J 등 전국 편의점·주유소 유통. 기존 라인업(Buffalo & Ranch, Mango & Jalapeño, Smoked Original & Teriyaki)에 추가. "볼드 플레이버 + 고단백" 축으로 편의점 즉석 간식 카테고리 확장 가속.</div>
+          <a class="news-link" href="https://www.prnewswire.com/news-releases/jack-links-drops-new-duos-sour-cream--onion-flavor-for-snackers-serious-about-flavor-and-value-302744788.html" target="_blank">📰 PR Newswire →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04.16 · 미국</div>
+          <div class="news-headline">The National Provisioner, Sour Cream & Onion DUOS 공식 유통 리포트</div>
+          <div class="news-summary">Jack Link's가 편의점 채널 파트너사 다수와 동시 런칭. 육가공·스낵 업계 매체 관점에서 DUOS 라인이 2025년 데뷔 후 가장 빠르게 성장하는 라인업으로 평가.</div>
+          <a class="news-link" href="https://www.provisioneronline.com/articles/120480-jack-links-rolls-out-sour-cream-and-onion-beef-jerky" target="_blank">📰 The National Provisioner →</a>
+        </div>
+
+        <p class="empty" style="margin-top:8px;">📌 호주·뉴질랜드 'Feed Your Wild Side' 통합 캠페인(Special × Hatched)은 3월 초 런칭 — 이번 주 ANZ 신규 집행물 없음.</p>
+      </div>
+
+    </div><!-- /issue-body -->
+  </details>
+
+  <!-- ════════════ ISSUE Vol.2 ════════════ -->
+  <details class="issue"
+    data-secs="commerce marketing dish battery shaver tooth jerky"
+    data-text="커머스 동향 네이버 쇼핑 AI 에이전트 버티컬 커머스 에이블리 올리브영 무신사 신뢰 이커머스 마케팅 AI 압축소비 필코노미 키덜트 크리에이터 커머스 식기세척기 cascade 프로쉬 건전지 duracell xbox 전기면도기 braun philips 전동칫솔 sonicare feel the care 육포 잭링크스 doritos">
+    <summary class="issue-summary">
+      <span class="toggle-icon">▶</span>
+      <div class="issue-meta">
+        <div class="issue-title">📋 Vol.2 — 2026년 4월 2주차</div>
+        <div class="issue-date">2026.04.06 – 2026.04.12 | 발행 2026.04.13</div>
+        <div class="issue-chips">
+          <span class="chip chip-commerce">🛒 커머스 동향</span>
+          <span class="chip chip-marketing">📣 마케팅 뉴스</span>
+          <span class="chip chip-dish">🍽️ 식기세척기</span>
+          <span class="chip chip-battery">🔋 건전지</span>
+          <span class="chip chip-shaver">🪒 전기면도기</span>
+          <span class="chip chip-tooth">🪥 전동칫솔</span>
+          <span class="chip chip-jerky">🥩 육포</span>
+        </div>
+      </div>
+    </summary>
+
+    <div class="issue-body" id="body-vol2">
+
+      <!-- 섹션 점프 바 -->
+      <div class="jump-bar">
+        <span>바로가기 →</span>
+        <a class="jump-btn" onclick="jumpTo('sec-commerce-2')">🛒 커머스</a>
+        <a class="jump-btn" onclick="jumpTo('sec-marketing-2')">📣 마케팅</a>
+        <a class="jump-btn" onclick="jumpTo('sec-dish-2')">🍽️ 식기세척기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-battery-2')">🔋 건전지</a>
+        <a class="jump-btn" onclick="jumpTo('sec-shaver-2')">🪒 전기면도기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-tooth-2')">🪥 전동칫솔</a>
+        <a class="jump-btn" onclick="jumpTo('sec-jerky-2')">🥩 육포</a>
+      </div>
+
+      <!-- ▸ 커머스 동향 -->
+      <div class="sec" id="sec-commerce-2" data-sec="commerce">
+        <div class="sec-header">
+          <div class="sec-dot dot-commerce"></div>
+          <div class="sec-title">🛒 커머스 동향 (Commerce Trends)</div>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-headline">네이버 쇼핑 AI 에이전트, 본격 가동</div>
+          <div class="news-summary">네이버가 2026년 봄 '쇼핑 AI 에이전트'를 공식 선보이며, 상품 탐색부터 결제까지 AI가 수행하는 에이전트 커머스 시대를 열고 있다. 쿠팡과의 GMV 격차가 5조원 내로 좁혀지면서 추월 가능성 전망.</div>
+          <a class="news-link" href="https://www.e-biztimes.com/news/404009" target="_blank">📰 이비즈타임즈 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-headline">버티컬 커머스 상위 10개 앱 MAU 동반 성장</div>
+          <div class="news-summary">에이블리(918만), 올리브영(905만), 무신사(818만) 순. 올리브영이 전년 대비 211만명 증가로 최고 성장률 기록. 무신사·에이블리는 성별 타깃을 지우고 외연 확장 중.</div>
+          <a class="news-link" href="https://platum.kr/archives/266929" target="_blank">📰 플래텀 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-headline">이커머스 시장, '신뢰'가 새로운 경쟁력</div>
+          <div class="news-summary">2026년 이커머스 시장의 화두가 '가격'에서 '신뢰'로 이동. 플랫폼 선택 기준이 "얼마나 싸게 파느냐"에서 "얼마나 믿을 수 있느냐"로 변화 중.</div>
+          <a class="news-link" href="https://m.ceoscoredaily.com/page/view/2025121514265994576" target="_blank">📰 CEOSCOREDAILY →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-headline">쿠팡 vs 네이버, GMV 격차 5조원 내로 축소</div>
+          <div class="news-summary">쿠팡 GMV ~55조원, 네이버 ~50조원. 네이버는 넷플릭스·컬리·우버와의 '넷컬우' 사각편대로 차별화 중.</div>
+          <a class="news-link" href="https://www.seoulfn.com/news/articleView.html?idxno=612591" target="_blank">📰 서울파이낸스 →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 마케팅 뉴스 -->
+      <div class="sec" id="sec-marketing-2" data-sec="marketing">
+        <div class="sec-header">
+          <div class="sec-dot dot-marketing"></div>
+          <div class="sec-title">📣 마케팅 뉴스 (Marketing News)</div>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026년 4월 · 업계</div>
+          <div class="news-headline">AI 마케팅, 탐색에서 실무 통합 단계로 전환</div>
+          <div class="news-summary">2026년 핵심 키워드: ①크리에이터 믹스 ②AI 프로듀싱 ③피코크 전략 ④GEO ⑤콘텐츠 친화형 UX. CJ 메조미디어는 AI 마케팅·발견형 커머스·OTT·DOOH에 주목.</div>
+          <a class="news-link" href="https://www.i-boss.co.kr/ab-6141-69489" target="_blank">📰 아이보스 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026년 4월 · 업계</div>
+          <div class="news-headline">초단기 유행 시대의 마케팅 생존법</div>
+          <div class="news-summary">탕후루, 두쫀쿠 등 단기 유행 상품의 라이프사이클이 극단적으로 짧아지면서 대응 속도가 핵심 경쟁력으로 부상.</div>
+          <a class="news-link" href="https://www.i-boss.co.kr/ab-74668-5172" target="_blank">📰 아이보스 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026년 · 소비자 트렌드</div>
+          <div class="news-headline">압축 소비 — 2026 핵심 소비 트렌드</div>
+          <div class="news-summary">돈·시간·에너지를 가장 큰 효용과 정서적 만족을 주는 곳에 집중하는 '고밀도 소비' 행태 확산. 불필요한 지출은 극도로 줄이되, 가치 있는 경험에는 과감하게 투자.</div>
+          <a class="news-link" href="https://retailtalk.co.kr/Trend/?bmode=view&idx=168762160" target="_blank">📰 리테일톡 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026년 · 소비자 트렌드</div>
+          <div class="news-headline">필코노미(Feel + Economy) — 기분이 소비를 결정</div>
+          <div class="news-summary">기분 전환을 위해 지갑을 여는 소비자 증가. 필요나 과시가 아닌 '기분'이 소비의 주요 동인이 되는 경제 현상.</div>
+          <a class="news-link" href="https://kbthink.com/life/card/mz-consumption-trends.html" target="_blank">📰 KB의 생각 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026년 · 소비자 트렌드</div>
+          <div class="news-headline">키덜트 &amp; 크리에이터 커머스 부상</div>
+          <div class="news-summary">저출산으로 유아동 시장 축소 → 성인 장난감 소비(키덜트)와 크리에이터 커머스가 새로운 성장 동력으로 부상.</div>
+          <a class="news-link" href="https://www.kjob.news/news/480381" target="_blank">📰 전국인력신문 →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 식기세척기 세제 -->
+      <div class="sec" id="sec-dish-2" data-sec="dish">
+        <div class="sec-header">
+          <div class="sec-dot dot-dish"></div>
+          <div class="sec-title">1. 식기세척기 세제 (Dishwasher Detergent)</div>
+        </div>
+
+        <div class="news-card dish ref">
+          <div class="ref-badge">📌 글로벌 캠페인 참고</div>
+          <div class="news-date">2026년 2월 · 미국</div>
+          <div class="news-headline">Cascade "Clean Machine" 체험 투어 — 지속 운영 중</div>
+          <div class="news-summary">P&G Cascade Platinum Plus의 몰입형 식기세척기 체험 투어가 미국 각지에서 운영 중. 소비자가 실물 크기 식기세척기 내부에서 세척 과정을 직접 체험. 한국 론칭 캠페인 기획 시 참고 가치 높음.</div>
+          <a class="news-link" href="https://us.pg.com/newsroom/news-releases/Cascade-Launches-Clean-Machine-Experiential-Tour-Inviting-Consumers-Inside-the-Dishwasher-to-See-What-Clean-Really-Means-with-Cascade-Platinum-Plus/" target="_blank">📰 P&G Newsroom →</a>
+        </div>
+
+        <div class="news-card dish">
+          <div class="news-date">2026년 1월 · 국내</div>
+          <div class="news-headline">한국소비자원 식세기 세제 품질 비교 결과</div>
+          <div class="news-summary">프로쉬가 '가혹 오염' 항목 최고 등급 기록. 일상 오염 조건에서는 에코버 올인원, 자연퐁 스팀워시, 프로쉬 그린레몬이 우수. 식세기 보급 확대(2021년 약 50만 대)에 따라 세제 시장 지속 성장.</div>
+          <a class="news-link" href="https://v.daum.net/v/20260108120235245?f=p" target="_blank">📰 다음뉴스 →</a>
+        </div>
+
+        <p class="empty">💡 Cascade 한국 뉴스: 2026년 6월 말 론칭 예정으로, 현재 한국 시장 관련 뉴스는 없는 것이 정상.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 건전지 -->
+      <div class="sec" id="sec-battery-2" data-sec="battery">
+        <div class="sec-header">
+          <div class="sec-dot dot-battery"></div>
+          <div class="sec-title">2. 건전지 (Batteries)</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026년 4월 · 글로벌</div>
+          <div class="news-headline">Duracell, 북미 시장 점유율 40% 유지 — Optimum Black 라인 확대</div>
+          <div class="news-summary">Duracell Optimum Black이 고전력 기기에서 기본 알카라인 대비 최대 4배 긴 수명 제공. Berkshire Hathaway 지원 하에 알카라인·리튬·충전식 전 분야 혁신 지속.</div>
+          <a class="news-link" href="https://www.ad-hoc-news.de/boerse/news/ueberblick/duracell-batteries-the-enduring-powerhouse-in-north-america-s-consumer/69060459" target="_blank">📰 Ad Hoc News →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026년 4월 8일 · 글로벌</div>
+          <div class="news-headline">Xbox 컨트롤러 건전지 미포함 이슈</div>
+          <div class="news-summary">2025.12월 이후 출하된 일부 Xbox 컨트롤러에 Duracell AA 건전지 누락 확인. Microsoft가 무료 충전식 배터리 제공 발표.</div>
+          <a class="news-link" href="https://www.windowscentral.com/gaming/xbox/if-you-bought-an-xbox-controller-since-december-microsoft-says-you-might-be-eligible-for-free-batteries" target="_blank">📰 Windows Central →</a>
+        </div>
+
+        <p class="empty">이번 주 한국 시장 건전지 관련 특이사항 없음</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전기면도기 -->
+      <div class="sec" id="sec-shaver-2" data-sec="shaver">
+        <div class="sec-header">
+          <div class="sec-dot dot-shaver"></div>
+          <div class="sec-title">3. 전기면도기 (Electric Shavers)</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026년 3월~ · 글로벌</div>
+          <div class="news-headline">Braun Series 9 PRO+ 96xx 미국 출시 완료</div>
+          <div class="news-summary">9697CC, 9660CCPS 두 모델 미국 출시. 새로운 96M 카세트 헤드 미국 판매 시작. 영국 선출시 후 글로벌 확대 중.</div>
+          <a class="news-link" href="https://shavercheck.com/reviews/braun-s9-pro-plus-96xx-review/" target="_blank">📰 ShaverCheck →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2025~2026년 · 글로벌</div>
+          <div class="news-headline">Philips i9000 Prestige Ultra — 최상위 플래그십</div>
+          <div class="news-summary">Bluetooth·앱·SenseIQ 기술로 면도 압력·속도 자동 조절. 회전식 면도기 중 최고 편안함·속도 평가. 시장 점유율: 필립스 43.81% vs 브라운 37.64%.</div>
+          <a class="news-link" href="https://menreviewhub.com/best-electric-shaver/" target="_blank">📰 MenReviewHub →</a>
+        </div>
+
+        <p class="empty">이번 주 한국 시장 전기면도기 관련 신규 뉴스 없음</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전동칫솔 -->
+      <div class="sec" id="sec-tooth-2" data-sec="tooth">
+        <div class="sec-header">
+          <div class="sec-dot dot-tooth"></div>
+          <div class="sec-title">4. 전동칫솔 (Electric Toothbrushes)</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026년 2월~ · 글로벌</div>
+          <div class="news-headline">🆕 Philips Sonicare "Feel the Care" — 5000~7300 시리즈 출시</div>
+          <div class="news-summary">10년 만의 구동부 대폭 업그레이드. 분당 62,000회 최적 브러시 움직임. 5000 시리즈($59.99)부터 7300 시리즈($199.99, 앱 연동)까지 라인업 확대. 브러시 헤드 바이오 플라스틱 70%, 패키징 100% 재활용 가능.</div>
+          <a class="news-link" href="https://www.usa.philips.com/a-w/about/news/archive/standard/news/press/2026/philips-sonicare-unveils-two-new-electric-toothbrush-ranges-alongside-refreshed-brand-direction.html" target="_blank">📰 Philips Newsroom →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-headline">Sonicare 5000 Series — 수동 대비 700% 플라크 제거</div>
+          <div class="news-summary">$59.99. Walmart, Target에서 판매 중. 엔트리 레벨 전동칫솔로 포지셔닝.</div>
+          <a class="news-link" href="https://www.prnewswire.com/news-releases/philips-sonicare-unveils-two-new-electric-toothbrush-ranges-alongside-refreshed-brand-direction-302705394.html" target="_blank">📰 PR Newswire →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-headline">Sonicare 7300 Series — 수동 대비 2000% 플라크 제거</div>
+          <div class="news-summary">$199.99. 앱 연동, 4개 브러싱 모드, 3단계 강도. Amazon 판매 중.</div>
+          <a class="news-link" href="https://compendiumlive.com/news/?newsID=105050" target="_blank">📰 Compendium →</a>
+        </div>
+
+        <p class="empty">Oral-B: 이번 주 특이사항 없음</p>
+        <p class="empty" style="margin-top:8px;">💡 필립스 소닉케어 "Feel the Care" 리뉴얼은 10년 만의 대규모 업데이트. 한국 시장 출시 시점 모니터링 필요.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 육포 -->
+      <div class="sec" id="sec-jerky-2" data-sec="jerky">
+        <div class="sec-header">
+          <div class="sec-dot dot-jerky"></div>
+          <div class="sec-title">5. 육포 (Jerky)</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026년 2월 24일 · 글로벌</div>
+          <div class="news-headline">Jack Link's × PepsiCo, Doritos 나초 치즈맛 비프저키 출시</div>
+          <div class="news-summary">기존 Doritos Spicy Sweet Chili, Sweet &amp; Tangy BBQ, Flamin' Hot 라인업에 추가. 단백질+볼드 플레이버 수요 대응. 미국 전역 온·오프라인 판매 중.</div>
+          <a class="news-link" href="https://www.prnewswire.com/news-releases/jack-links-and-pepsico-foods-launch-doritos-nacho-cheese-flavored-beef-jerky-and-meat-sticks-302695036.html" target="_blank">📰 PR Newswire →</a>
+        </div>
+
+        <p class="empty">이번 주 한국 육포 시장 특이사항 없음</p>
+      </div>
+
+    </div><!-- /issue-body -->
+  </details>
+
+  <!-- ════════════ ISSUE Vol.1 ════════════ -->
+  <details class="issue"
+    data-secs="commerce marketing dish battery shaver tooth jerky"
+    data-text="커머스 동향 쿠팡 네이버 올리브영 이커머스 마케팅 뉴스 식기세척기 cascade 건전지 전기면도기 전동칫솔 육포 잭링크스">
+    <summary class="issue-summary">
+      <span class="toggle-icon">▶</span>
+      <div class="issue-meta">
+        <div class="issue-title">📋 Vol.1 — 2026년 4월 1주차</div>
+        <div class="issue-date">2026.04.04 – 2026.04.10 | 발행 2026.04.10</div>
+        <div class="issue-chips">
+          <span class="chip chip-commerce">🛒 커머스 동향</span>
+          <span class="chip chip-marketing">📣 마케팅 뉴스</span>
+          <span class="chip chip-dish">🍽️ 식기세척기</span>
+          <span class="chip chip-battery">🔋 건전지</span>
+          <span class="chip chip-shaver">🪒 전기면도기</span>
+          <span class="chip chip-tooth">🪥 전동칫솔</span>
+          <span class="chip chip-jerky">🥩 육포</span>
+        </div>
+      </div>
+    </summary>
+
+    <div class="issue-body" id="body-vol1">
+
+      <!-- 섹션 점프 바 -->
+      <div class="jump-bar">
+        <span>바로가기 →</span>
+        <a class="jump-btn" onclick="jumpTo('sec-commerce-1')">🛒 커머스</a>
+        <a class="jump-btn" onclick="jumpTo('sec-marketing-1')">📣 마케팅</a>
+        <a class="jump-btn" onclick="jumpTo('sec-dish-1')">🍽️ 식기세척기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-battery-1')">🔋 건전지</a>
+        <a class="jump-btn" onclick="jumpTo('sec-shaver-1')">🪒 전기면도기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-tooth-1')">🪥 전동칫솔</a>
+        <a class="jump-btn" onclick="jumpTo('sec-jerky-1')">🥩 육포</a>
+      </div>
+
+      <!-- ▸ 커머스 동향 -->
+      <div class="sec" id="sec-commerce-1" data-sec="commerce">
+        <div class="sec-header">
+          <div class="sec-dot dot-commerce"></div>
+          <div class="sec-title">🛒 커머스 동향 (Commerce Trends)</div>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-headline">쿠팡, 개인정보 유출 이후 MAU 회복세 지속</div>
+          <div class="news-summary">2025년 말 개인정보 유출(3,367만 명) 사태 이후 쿠팡 MAU는 2026년 2월 3,312만 명까지 감소했으나 이후 회복 추세. 2026년 이커머스 핵심 경쟁력이 '가격'에서 '신뢰'로 이동 중. 브랜드 입점 전략상 설명·신뢰가 필요한 상품군은 멀티채널 분산이 유효.</div>
+          <a class="news-link" href="https://econmingle.com/economy/coupang-wau-recovery-after-data-breach/" target="_blank">📰 쿠팡 MAU 회복 추세 — 이콘밍글 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-headline">네이버, '넷·컬·우' 사각편대 완성 — 슈퍼적립 10% 운영 중</div>
+          <div class="news-summary">네이버가 넷플릭스·컬리·우버택시와 제휴해 멤버십 혜택 강화. 네이버플러스 회원 대상 최대 10% 슈퍼적립 서비스 10월까지 운영. 생활용품·퍼스널케어 카테고리에서 네이버 채널 비중 증가 추세.</div>
+          <a class="news-link" href="https://www.sisajournal.com/news/articleView.html?idxno=305394" target="_blank">📰 탈쿠팡족 멤버십 경쟁 — 시사저널 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-headline">올리브영 4월 올영데이 (4/25~27 예정)</div>
+          <div class="news-summary">4월 정기 올영데이 25~27일 예정. 구강케어·퍼스널케어 카테고리 할인 포함 가능. 전동칫솔 관련 프로모션 25일 직전 확인 권장.</div>
+          <a class="news-link" href="https://dasaja.co.kr/saja_guide/61" target="_blank">📰 올리브영 세일 캘린더 — 다사자 →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 마케팅 뉴스 -->
+      <div class="sec" id="sec-marketing-1" data-sec="marketing">
+        <div class="sec-header">
+          <div class="sec-dot dot-marketing"></div>
+          <div class="sec-title">📣 마케팅 뉴스 (Marketing News)</div>
+        </div>
+        <div class="news-card marketing">
+          <div class="news-date">2026년 4월 · 국내</div>
+          <div class="news-headline">CJ 메조미디어 4월 미디어&amp;마켓 이슈 — 리커버리노믹스·Z세대 마케팅</div>
+          <div class="news-summary">2026년 4월 화두는 '리커버리노믹스': 사우나·냉탕 등 신체 회복 경험을 마케팅으로 연결하는 트렌드 부상. 키즈 공간 마케팅, Z세대 비음주 경험 마케팅, 구글 나노바나나 2 출시, 네이버 카페 비즈센터 오픈 등 디지털 광고 환경 변화 포함.</div>
+          <a class="news-link" href="https://www.i-boss.co.kr/ab-3208-1710" target="_blank">📰 CJ 메조미디어 4월 미디어&amp;마켓 이슈 — 아이보스 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026년 · 국내</div>
+          <div class="news-headline">오픈서베이 온라인 쇼핑 트렌드 리포트 2026</div>
+          <div class="news-summary">쿠팡 이용률 7%p 하락, 네이버플러스스토어 7.5%p 상승, 토스쇼핑 +12%p 급등. AI 쇼핑 추천 이용 경험자 60% 돌파. 가격 민감도 상승 속 신뢰 기반 플랫폼 재편 가속 — 브랜드 입점 채널 전략 재검토 시 참고.</div>
+          <a class="news-link" href="https://blog.opensurvey.co.kr/trendreport/online_shopping-2026/" target="_blank">📰 온라인 쇼핑 트렌드 리포트 2026 — 오픈서베이 블로그 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026년 Q1 · 국내</div>
+          <div class="news-headline">레뷰코퍼레이션 Q1 2026 인플루언서 마케팅 트렌드 리포트</div>
+          <div class="news-summary">직원-인플루언서 융합(Employee Advocacy) 급부상, AI 개인화 콘텐츠 확산, K-콘텐츠 글로벌화 가속. 브랜드 공식 채널보다 임직원·고객 UGC 활용이 신뢰도·전환율 모두 우위.</div>
+          <a class="news-link" href="https://news.nate.com/view/20260116n09201" target="_blank">📰 레뷰코퍼레이션 Q1 2026 인플루언서 트렌드 — 네이트뉴스 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026년 · 국내</div>
+          <div class="news-headline">인크로스 2026 디지털 마케팅 트렌드 — GEO(생성형 엔진 최적화) 주목</div>
+          <div class="news-summary">크리에이터 믹스 전략, AI 프로듀싱 콘텐츠, 그리고 ChatGPT·Perplexity 등 생성형 AI 검색에 최적화하는 'GEO(Generative Engine Optimization)'가 SEO를 대체할 차세대 키워드로 부상.</div>
+          <a class="news-link" href="https://www.i-boss.co.kr/ab-3208-1633" target="_blank">📰 인크로스 2026 디지털 마케팅 트렌드 — 아이보스 →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 식기세척기 세제 -->
+      <div class="sec" id="sec-dish-1" data-sec="dish">
+        <div class="sec-header">
+          <div class="sec-dot dot-dish"></div>
+          <div class="sec-title">1. 식기세척기 세제 (Dishwasher Detergent)</div>
+        </div>
+        <p class="empty">이번 주 국내 특이사항 없음 — 캐스케이드 한국 론칭은 2026년 6월 말 예정.</p>
+
+        <div class="news-card dish ref" style="margin-top:12px;">
+          <div class="ref-badge">📌 글로벌 캠페인 참고</div>
+          <div class="news-date">2026년 2월 11일 · 미국</div>
+          <div class="news-headline">Cascade "Clean Machine" 체험 투어 — P&G Platinum Plus 브랜드 체험 전략</div>
+          <div class="news-summary">P&G Cascade Platinum Plus가 플로리다 주립박람회에서 세계 최초 식기세척기 내부 몰입형 체험 투어 진행. 실물 크기 세척 사이클을 직접 체험하는 "Seeing is Believing" 전략. 'Dawn 대비 2X 기름 세척력'을 체험으로 입증한 사례로 한국 론칭 캠페인 기획 시 참고.</div>
+          <a class="news-link" href="https://us.pg.com/newsroom/news-releases/Cascade-Launches-Clean-Machine-Experiential-Tour-Inviting-Consumers-Inside-the-Dishwasher-to-See-What-Clean-Really-Means-with-Cascade-Platinum-Plus/" target="_blank">📰 Cascade Clean Machine 보도자료 — P&G Newsroom →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 건전지 -->
+      <div class="sec" id="sec-battery-1" data-sec="battery">
+        <div class="sec-header">
+          <div class="sec-dot dot-battery"></div>
+          <div class="sec-title">2. 건전지 (Batteries)</div>
+        </div>
+        <p class="empty">이번 주 특이사항 없음</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전기면도기 -->
+      <div class="sec" id="sec-shaver-1" data-sec="shaver">
+        <div class="sec-header">
+          <div class="sec-dot dot-shaver"></div>
+          <div class="sec-title">3. 전기면도기 (Electric Shavers)</div>
+        </div>
+        <p class="empty">이번 주 특이사항 없음</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전동칫솔 -->
+      <div class="sec" id="sec-tooth-1" data-sec="tooth">
+        <div class="sec-header">
+          <div class="sec-dot dot-tooth"></div>
+          <div class="sec-title">4. 전동칫솔 (Electric Toothbrushes)</div>
+        </div>
+        <p class="empty">이번 주 특이사항 없음</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 육포 -->
+      <div class="sec" id="sec-jerky-1" data-sec="jerky">
+        <div class="sec-header">
+          <div class="sec-dot dot-jerky"></div>
+          <div class="sec-title">5. 육포 (Jerky)</div>
+        </div>
+        <p class="empty">이번 주 특이사항 없음</p>
+      </div>
+
+    </div><!-- /issue-body -->
+  </details>
+
+</main>
+
+<footer>
+  🤖 조비스(Jovis) 자동 생성 | sweetycat90@gmail.com | 매주 월요일 오전 9시
+</footer>
+
+<script>
+  /* ── 헤더 높이 동적 계산 ── */
+  function updateHeaderHeight() {
+    const h = document.getElementById('site-header').offsetHeight;
+    document.documentElement.style.setProperty('--header-h', h + 'px');
+  }
+  updateHeaderHeight();
+  window.addEventListener('resize', updateHeaderHeight);
+
+  /* ── 섹션 네비게이션 (상단 버튼) ──
+     클릭 시: ① 버튼 활성화 ② 첫 번째 열린 이슈의 해당 섹션으로 스크롤 */
+  function navTo(sec) {
+    // 버튼 활성 상태 업데이트
+    document.querySelectorAll('.snav-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.sec === sec));
+
+    updateLabel(sec);
+
+    if (sec === 'all') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    // 첫 번째 열린 이슈에서 해당 섹션 찾아 스크롤
+    const openIssue = document.querySelector('details.issue[open]');
+    if (!openIssue) return;
+
+    const target = openIssue.querySelector(`.sec[data-sec="${sec}"]`);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // 잠깐 하이라이트
+      target.style.transition = 'background 0.3s';
+      target.style.background = 'rgba(108,99,255,0.08)';
+      setTimeout(() => { target.style.background = ''; }, 1000);
+    }
+  }
+
+  /* ── 이슈 내부 점프 바 ── */
+  function jumpTo(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.style.transition = 'background 0.3s';
+    el.style.background = 'rgba(108,99,255,0.08)';
+    setTimeout(() => { el.style.background = ''; }, 900);
+  }
+
+  /* ── 검색 필터 ── */
+  function filterIssues() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    let visible = 0;
+    document.querySelectorAll('details.issue').forEach(issue => {
+      const txt = (issue.dataset.text || '') + ' ' + issue.textContent;
+      const show = !q || txt.toLowerCase().includes(q);
+      issue.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    document.getElementById('visibleCount').textContent = visible;
+  }
+
+  function updateLabel(sec) {
+    const labels = {
+      all: '', commerce: '🛒 커머스 동향', marketing: '📣 마케팅 뉴스',
+      dish: '🍽️ 식기세척기 세제', battery: '🔋 건전지',
+      shaver: '🪒 전기면도기', tooth: '🪥 전동칫솔', jerky: '🥩 육포'
+    };
+    const el = document.getElementById('filterLabel');
+    el.textContent = labels[sec] ? `→ ${labels[sec]}` : '';
+    el.style.color = 'var(--accent)';
+  }
+</script>
+</body>
+</html>
