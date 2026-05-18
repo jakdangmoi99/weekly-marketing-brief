@@ -1,12 +1,38 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-build-ts="2026-05-18 17:34 KST">
 <head>
-  <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script>
+(function(){
+  var BUILD = document.documentElement.getAttribute('data-build-ts') || '';
+  function check(){
+    try{
+      fetch(location.pathname + '?_c=' + Date.now(), {cache:'no-store'})
+        .then(function(r){ return r.text(); })
+        .then(function(t){
+          var m = t.match(/data-build-ts="([^"]+)"/);
+          if (m && m[1] && m[1] !== BUILD){
+            location.replace(location.pathname + '?t=' + Date.now() + location.hash);
+          }
+        }).catch(function(){});
+    }catch(e){}
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', check);
+  } else { check(); }
+  window.addEventListener('pageshow', function(e){
+    if (e.persisted) location.replace(location.pathname + '?t=' + Date.now() + location.hash);
+  });
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden) check();
+  });
+})();
+</script>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>마케팅 브리핑 아카이브 | 조비스</title>
   <style>
@@ -286,34 +312,48 @@
       #site-header, main { padding-left: 14px; padding-right: 14px; }
       #searchInput { width: 140px; }
     }
-  .ptr-indicator{text-align:center;height:0;overflow:hidden;transition:height .2s;font-size:14px;color:#94a3b8;line-height:50px}
-.ptr-indicator.pulling{height:50px}
-.ptr-indicator.refreshing{height:50px;color:#3b82f6}
+  
+#__topbar{position:fixed;top:0;left:0;right:0;z-index:99999;background:#0f172a;color:#cbd5e1;font-size:11px;text-align:center;padding:6px 8px;font-family:-apple-system,'Apple SD Gothic Neo',sans-serif;letter-spacing:.3px;line-height:18px;transition:background .15s,color .15s}
+#__topbar.pulling{background:#1e40af;color:#fff}
+#__topbar.refreshing{background:#2563eb;color:#fff}
+body{padding-top:30px !important}
+
 </style>
 </head>
 <body>
-<div class="ptr-indicator" id="ptr">⬇ 당겨서 새로고침</div>
+<div id="__topbar">📅 마지막 업데이트: 2026-05-18 17:34 KST</div>
 <script>
 (function(){
-  var startY=0,pulling=false,el=document.getElementById('ptr');
-  document.addEventListener('touchstart',function(e){
-    if(window.scrollY===0){startY=e.touches[0].clientY;pulling=true;}
-  },{passive:true});
-  document.addEventListener('touchmove',function(e){
-    if(!pulling)return;
-    var dy=e.touches[0].clientY-startY;
-    if(dy>0&&dy<150){el.style.height=Math.min(dy*0.5,50)+'px';}
-    if(dy>80){el.className='ptr-indicator pulling';el.textContent='↻ 놓으면 새로고침';}
-    else{el.className='ptr-indicator';el.textContent='⬇ 당겨서 새로고침';}
-  },{passive:true});
-  document.addEventListener('touchend',function(){
-    if(!pulling)return;
-    pulling=false;
-    if(el.classList.contains('pulling')){
-      el.className='ptr-indicator refreshing';
-      el.textContent='새로고침 중...';
-      window.location.href=window.location.pathname+'?t='+Date.now();
-    }else{el.style.height='0';}
+  var bar = document.getElementById('__topbar');
+  if (!bar) return;
+  var origText = bar.textContent;
+  var startY = 0, pulling = false, ready = false;
+  function reset(){ bar.className=''; bar.textContent = origText; }
+  document.addEventListener('touchstart', function(e){
+    if (window.scrollY <= 0){ startY = e.touches[0].clientY; pulling = true; ready = false; }
+  }, {passive:true});
+  document.addEventListener('touchmove', function(e){
+    if (!pulling) return;
+    var dy = e.touches[0].clientY - startY;
+    if (dy <= 0){ pulling = false; ready = false; reset(); return; }
+    if (dy > 80){
+      bar.className='pulling';
+      bar.textContent = '↻ 놓으면 새로고침';
+      ready = true;
+    } else {
+      bar.className='';
+      bar.textContent = '⬇ 더 당기세요 (' + Math.round(dy) + 'px)';
+      ready = false;
+    }
+  }, {passive:true});
+  document.addEventListener('touchend', function(){
+    if (!pulling) return;
+    pulling = false;
+    if (ready){
+      bar.className='refreshing';
+      bar.textContent='새로고침 중...';
+      location.replace(location.pathname + '?t=' + Date.now() + location.hash);
+    } else { reset(); }
   });
 })();
 </script>
@@ -352,8 +392,8 @@
     <summary class="issue-summary">
       <span class="toggle-icon">▶</span>
       <div class="issue-meta">
-        <div class="issue-title">📋 Vol.6 — 2026년 5월 2주차</div>
-        <div class="issue-date">2026.05.04 – 2026.05.10 | 발행 2026.05.11</div>
+        <div class="issue-title">📋 Vol.7 — 2026년 5월 3주차</div>
+        <div class="issue-date">2026.05.11 – 2026.05.17 | 발행 2026.05.18</div>
         <div class="issue-chips">
           <span class="chip chip-commerce">🛒 커머스 동향</span>
           <span class="chip chip-marketing">📣 마케팅 뉴스</span>
@@ -366,7 +406,235 @@
       </div>
     </summary>
 
-    <div class="issue-body" id="body-vol6">
+    <div class="issue-body" id="body-vol7">
+
+      <!-- 섹션 점프 바 -->
+      <div class="jump-bar">
+        <span>바로가기 →</span>
+        <a class="jump-btn" onclick="jumpTo('sec-commerce-7')">🛒 커머스</a>
+        <a class="jump-btn" onclick="jumpTo('sec-marketing-7')">📣 마케팅</a>
+        <a class="jump-btn" onclick="jumpTo('sec-dish-7')">🍽️ 식기세척기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-battery-7')">🔋 건전지</a>
+        <a class="jump-btn" onclick="jumpTo('sec-shaver-7')">🪒 전기면도기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-tooth-7')">🪥 전동칫솔</a>
+        <a class="jump-btn" onclick="jumpTo('sec-jerky-7')">🥩 육포</a>
+      </div>
+
+      <!-- ▸ 커머스 동향 -->
+      <div class="sec" id="sec-commerce-7" data-sec="commerce">
+        <div class="sec-header">
+          <div class="sec-dot dot-commerce"></div>
+          <div class="sec-title">🛒 커머스 동향 (Commerce Trends)</div>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.05.17 · 국내</div>
+          <div class="news-headline">이커머스, 네이버·쿠팡 양강 구도 속 컬리만 성장</div>
+          <div class="news-summary">국가데이터처 온라인쇼핑동향 기준 1분기 이커머스 상품 거래액이 뒷걸음질친 가운데, 쿠팡·네이버 양강 쏠림이 더 심해졌다. 중위권 플랫폼이 줄줄이 정체된 상황에서 컬리만 유일하게 성장세 유지. 1인 브랜드 시사점: 같은 SKU라도 '네이버 vs 쿠팡' 채널 전략을 분리해 관리해야 하는 시기.</div>
+          <a class="news-link" href="https://www.dnews.co.kr/uhtml/view.jsp?idxno=202605171039185880976" target="_blank">📰 디지털타임스 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.05.12 · 국내</div>
+          <div class="news-headline">고물가에 다이소로 몰린다 — 가성비 러닝템도 '품절'</div>
+          <div class="news-summary">와이즈앱·리테일 기준 4월 다이소몰 MAU 513만명(전년 동기 대비 큰 폭 증가). 대형마트·이커머스가 낮은 마진율로 고전하는 사이, 다이소는 '가성비 카테고리 점령' 모드. 운동·생활용품에서 종종 품절. 가성비 채널로의 카테고리 이동을 보여주는 지표.</div>
+          <a class="news-link" href="https://www.ajunews.com/view/20260511154221370" target="_blank">📰 아주경제 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.05.08 · 국내</div>
+          <div class="news-headline">다이소 '3대 성장 엔진' — 온라인·패션뷰티·외국인</div>
+          <div class="news-summary">다이소가 이커머스(다이소몰)·패션뷰티·외국인 수요를 3대 성장 엔진으로 키우는 중. 4월 MAU 513만명 = G마켓의 73% 수준까지 추격. 단순 오프라인 가성비 채널이 아니라 '온라인 종합몰'로 포지셔닝 전환 중 — 향후 1년간 카테고리별 점유율 재편 가능성.</div>
+          <a class="news-link" href="https://n.news.naver.com/mnews/article/018/0006275382?sid=101" target="_blank">📰 이데일리 →</a>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.05.11 · 국내</div>
+          <div class="news-headline">해외직구 현금영수증 '고무줄 발급' — 이커머스별 정책 제각각</div>
+          <div class="news-summary">네이버쇼핑은 국내외 사업자 무관하게 해외직구 현금영수증을 발행하지만, 쿠팡·G마켓·11번가는 판매자 거주지에 따라 발급 차이. 소비자 혼란 누적. 해외직구 비중이 큰 1인 브랜드는 자체 안내문구로 사전 고지하는 게 CS 비용 절감 포인트.</div>
+          <a class="news-link" href="http://www.consumernews.co.kr/news/articleView.html?idxno=754931" target="_blank">📰 컨슈머뉴스 →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 마케팅 뉴스 -->
+      <div class="sec" id="sec-marketing-7" data-sec="marketing">
+        <div class="sec-header">
+          <div class="sec-dot dot-marketing"></div>
+          <div class="sec-title">📣 마케팅 뉴스 (Marketing News)</div>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.05.16 · 소비자 트렌드</div>
+          <div class="news-headline">2030 '영양제 루틴' = 자기관리…건강 카테고리 인식 전환</div>
+          <div class="news-summary">오픈서베이 '건강기능식품 트렌드 리포트 2025' — 응답자 52.8%가 건강 악화 시 가장 먼저 식단·영양제를 챙긴다고 응답. 헬시플레저 키워드가 식음료를 넘어 뷰티·외식·생활 카테고리까지 확장. 1인 브랜드도 제품 카피에 '루틴' 단어를 넣어 일상화 메시지를 시도할 만한 시기.</div>
+          <a class="news-link" href="https://n.news.naver.com/mnews/article/666/0000107258?sid=101" target="_blank">📰 경기일보 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.05.15 · 업계</div>
+          <div class="news-headline">외식업계, 고물가에도 '경험' 승부수 — 객단가 방어 전략</div>
+          <div class="news-summary">오픈서베이 2024 조사 — '비용을 더 쓰더라도 외식 시 만족도 높은 곳을 간다'는 응답 우세. 미식·체험 중심 외식 마케팅이 가성비 흐름과 동시에 강해지는 '바벨 시장' 형성. 객단가 방어가 필요한 브랜드는 가성비가 아닌 '경험 가치'에서 차별 포인트를 잡아야 함.</div>
+          <a class="news-link" href="http://www.mkhealth.co.kr/news/articleView.html?idxno=78606" target="_blank">📰 엠케이헬스 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.05.11 · 업계</div>
+          <div class="news-headline">제약사도 다이소·창고형으로 — 약국 중심 소비구조 흔들</div>
+          <div class="news-summary">다이소 3000원짜리 비타민·유산균, 창고형 약국 카트 진통제가 일상화. 오픈서베이 '건기식 트렌드 리포트 2026' — 다이소는 20·30대를 중심으로 '기본 영양제를 즉흥 구매하는 채널'로 정착. 약국이 누리던 '권위 채널' 지위가 가성비·접근성 채널로 분산 중.</div>
+          <a class="news-link" href="https://biz.newdaily.co.kr/site/data/html/2026/05/11/2026051100277.html" target="_blank">📰 뉴데일리경제 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.05.11 · 소비자 트렌드</div>
+          <div class="news-headline">'오프런' 지고 '심신 회복' 소비 뜬다 — 회복·치유 카테고리 부상</div>
+          <div class="news-summary">무리한 자기관리(오프런·바디프로필 등)에서 회복·치유 중심 라이프스타일로 전환 중. 명상·요가·수면·영양제 카테고리에 지갑이 열리는 상황. '극단적 효율' 메시지보다 '지속 가능한 일상' 메시지가 더 잘 먹히는 시즌.</div>
+          <a class="news-link" href="http://www.mkhealth.co.kr/news/articleView.html?idxno=78540" target="_blank">📰 엠케이헬스 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.05.14 · 소비자 트렌드</div>
+          <div class="news-headline">손바닥 위 '운(運)의 시장' — 사주·타로 앱이 마케팅 채널로</div>
+          <div class="news-summary">트렌드모니터: 20대 68%, 30대 67.5%가 사주·타로에 관심. 대학내일20대연구소: 1020세대 43%가 '성격 파악 목적'으로 운세 이용. Vol.6에서 다룬 트렌드모니터 '메타센싱' 키워드와 직결 — 자기 정체성 탐색 욕구가 운세 콘텐츠 소비로 표출. 브랜드 콜라보·콘텐츠 마케팅 신규 채널 후보.</div>
+          <a class="news-link" href="https://n.news.naver.com/mnews/article/277/0005762781?sid=110" target="_blank">📰 아시아경제 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.05 · 소비자 트렌드</div>
+          <div class="news-headline">'내 사진 넣은 맥주 한 캔' — 개인화 주류 트렌드 확산</div>
+          <div class="news-summary">대학내일20대연구소: 2025년 누적 술자리는 줄었지만 '나만의 술' 커스터마이징 수요는 증가. 수제맥주에서 시작해 논알코올·소주까지 전 카테고리로 확산. 음주 인구 감소 = 카테고리 위기가 아니라 '의미 부여형 1회 소비'로 객단가 방어. FMCG 패키지 마케팅 학습 사례.</div>
+          <a class="news-link" href="https://www.smarttoday.co.kr/ko-kr/articles/106824" target="_blank">📰 스마트투데이 →</a>
+        </div>
+
+        <div class="news-card marketing">
+          <div class="news-date">2026.05.16 · 글로벌</div>
+          <div class="news-headline">글로벌 맛집 '아시아 1호점' 서울 집결 — 한국 = 글로벌 미식 허브</div>
+          <div class="news-summary">차지(CHAGEE) 강남역 매장 오픈런 등 글로벌 외식 브랜드의 아시아 1호점이 도쿄가 아닌 서울로 집중. 트렌드모니터 — 한국 소비자의 미식 관심도가 글로벌 최상위권. 한국 진출 브랜드들에 '런칭 마케팅의 최적 무대' 메시지가 강화되는 중.</div>
+          <a class="news-link" href="https://n.news.naver.com/mnews/article/050/0000106202?sid=101" target="_blank">📰 한경비즈니스 →</a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 식기세척기 세제 -->
+      <div class="sec" id="sec-dish-7" data-sec="dish">
+        <div class="sec-header">
+          <div class="sec-dot dot-dish"></div>
+          <div class="sec-title">1. 식기세척기 세제 (Dishwasher Detergent)</div>
+        </div>
+
+        <p class="empty">이번 주 한국 시장 신규 뉴스 없음 — Cascade 6월 말 공식 론칭 전까지 정상 상태.</p>
+
+        <div class="news-card" style="margin-top:12px;">
+          <div class="news-date">2026 · 글로벌 · 📌 글로벌 캠페인 참고</div>
+          <div class="news-headline">Cascade Complete 'Invisible Food Residue' 2026 TV 캠페인</div>
+          <div class="news-summary">미국 본토에서 Cascade Complete의 새 TV 캠페인 'Invisible Food Residue' 본격 가동. "씻은 뒤에도 남는 잔여물"이라는 보편적 문제를 소구점으로 잡음 — Cascade의 '눈에 안 보이는 차이'를 시각화. 한국 론칭 카피 톤을 설계할 때 '문제 발견 → 솔루션' 구조의 참고 사례.</div>
+          <a class="news-link" href="https://abancommercials.com/cascade/complete-invisible-food-residue-2026-commercial/291658/" target="_blank">📰 abancommercials →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026 · 글로벌 · 📌 글로벌 캠페인 참고</div>
+          <div class="news-headline">Cascade Platinum Plus 'Clean Machine' 체험 투어 + Kenan Thompson 모델</div>
+          <div class="news-summary">P&G가 미국에서 Cascade Platinum Plus 'Clean Machine' 체험형 마케팅 투어 진행 중. SNL 출신 Kenan Thompson을 모델로 기용, '소비자를 식세기 내부로 초대해 클린의 의미를 시각화'하는 컨셉. 한국 론칭 시 체험형 PR/팝업 이벤트 구성의 좋은 벤치마크.</div>
+          <a class="news-link" href="https://us.pg.com/newsroom/news-releases/Cascade-Launches-Clean-Machine-Experiential-Tour-Inviting-Consumers-Inside-the-Dishwasher-to-See-What-Clean-Really-Means-with-Cascade-Platinum-Plus/" target="_blank">📰 P&G Newsroom →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.04 · 인도 · 글로벌 경쟁사 참고</div>
+          <div class="news-headline">Finish, 발리우드 스타 영입 'The Right Way to Dishwash' 캠페인</div>
+          <div class="news-summary">Finish가 인도 시장에서 Ayushmann Khurrana(발리우드 스타)를 브랜드 앰배서더로 영입, '올바른 식세기 사용법' 캠페인을 본격 전개. 핵심 메시지는 "헹굼 없이 바로 넣어도 깨끗하다" — 기성 식세기 사용자 오해를 해소하는 '카테고리 빌딩' 방식. 한국 식세기 보급률이 아직 낮은 상황에서 Cascade 론칭 메시지 설계에 직접적인 참고가 됨.</div>
+          <a class="news-link" href="https://www.adgully.com/post/14011/finish-taps-ayushmann-khurrana-for-the-right-way-to-dishwash-campaign-to-bust-dishwasher-myths" target="_blank">📰 Adgully →</a>
+        </div>
+
+        <p class="empty" style="margin-top:8px;">💡 시사점 — 글로벌 Cascade는 'Invisible Residue(눈에 안 보이는 차이)' 포지셔닝, 경쟁사 Finish는 '오해 해소(헹굼 불필요)' 포지셔닝으로 분기. 한국 론칭 메시지는 두 축 중 어느 쪽에 무게를 둘지 의사결정 필요 — 한국 식세기 보급률을 감안하면 'Finish식 카테고리 빌딩'이 초기 우선순위가 합리적.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 건전지 -->
+      <div class="sec" id="sec-battery-7" data-sec="battery">
+        <div class="sec-header">
+          <div class="sec-dot dot-battery"></div>
+          <div class="sec-title">2. 건전지 (Batteries)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;">💡 듀라셀×메시 'Messi Reboot' 글로벌 캠페인 후속(2026 월드컵 시즌 5~8월)이 본격화 시점에 진입. 다음 주 캠페인 신규 자산 공개 가능성 모니터링 필요.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전기면도기 -->
+      <div class="sec" id="sec-shaver-7" data-sec="shaver">
+        <div class="sec-header">
+          <div class="sec-dot dot-shaver"></div>
+          <div class="sec-title">3. 전기면도기 (Electric Shavers) ⭐ 이번 주 주목</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.05.12 · 국내</div>
+          <div class="news-headline">파나소닉코리아, 고척스카이돔 '2026 파나소닉 패밀리데이' 개최 (키움-한화전)</div>
+          <div class="news-summary">키움히어로즈와 7년차 동행 중인 파나소닉코리아가 5/12 고척스카이돔 키움-한화전에서 패밀리데이 행사 개최. 외부 2층 보행광장에서 룰렛 이벤트·'시간을 잡아라' 미션 — 전기면도기, 헤어드라이어, 트리머, 우산, 타포린백을 경품으로 증정. 경기 중에도 이닝 이벤트 진행. 스포츠 IP × 가전 브랜드 패키지 마케팅의 정석 케이스.</div>
+          <a class="news-link" href="http://www.hansbiz.co.kr/news/articleView.html?idxno=837925" target="_blank">📰 한스경제 →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.05.11 · 국내</div>
+          <div class="news-headline">키움 한화전 '파나소닉 패밀리데이' 부대 이벤트 풀라인업 공개</div>
+          <div class="news-summary">우아! 나나 시타 시구 + 특별공연 + 이닝 이벤트 결합 풀패키지. 파나소닉 대표 제품(전기면도기·에티켓 트리머·타포린백 등)을 경기 중에도 경품으로 지급. 1인 브랜드도 지역 스포츠 이벤트나 동아리 협찬 같은 마이크로 IP 협업에 활용 가능한 구조.</div>
+          <a class="news-link" href="https://m.sports.naver.com/kbaseball/article/468/0001239595" target="_blank">📰 스포츠서울 →</a>
+        </div>
+
+        <p class="empty" style="margin-top:8px;">💡 시사점 — Vol.6에서 '5월 신제품 없음, 가정의 달 시즌 후순위'로 평가했던 카테고리가 파나소닉의 KBO 패밀리데이로 한 차례 반등. 필립스(4월 SkinIQ 7000/5000 출시) → 파나소닉(5월 KBO 이벤트) → 브라운(6월 아버지의 날 시즌 반응 예상)으로 본사들이 차례로 노출 시점 분산 중. 한국 시장 5~6월은 '신제품 발표 + 시즌 이벤트' 결합 사례를 관찰하기 좋은 구간.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 전동칫솔 -->
+      <div class="sec" id="sec-tooth-7" data-sec="tooth">
+        <div class="sec-header">
+          <div class="sec-dot dot-tooth"></div>
+          <div class="sec-title">4. 전동칫솔 (Electric Toothbrushes)</div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.05.08 · 국내</div>
+          <div class="news-headline">필립스 '올 뉴 소닉케어 프로' 후속 — 5/4~10 네이버 공식몰 할인 프로모션 + 구강건강 캠페인 본격화</div>
+          <div class="news-summary">Vol.6에서 다룬 '올 뉴 소닉케어 프로' 출시 후속 — 5/4~10 네이버 공식몰 할인 프로모션 + 구강건강 캠페인 동시 가동. 소닉케어 앱과 연동되는 양치 코칭 기능이 핵심 USP. 신제품 출시 → 1주차 할인 → 2주차 인플루언서 콘텐츠로 이어지는 3주 가속 패턴 학습 케이스.</div>
+          <a class="news-link" href="https://www.dentalnews.or.kr/news/article.html?no=47203" target="_blank">📰 덴탈뉴스 →</a>
+        </div>
+
+        <div class="news-card">
+          <div class="news-date">2026.05.06 · 국내</div>
+          <div class="news-headline">필립스 소닉케어, 박수홍 유튜브 '행복해다홍' 콜라보 콘텐츠 공개</div>
+          <div class="news-summary">박수홍 가족 일상 채널 '행복해다홍'을 통해 가족 구강관리 루틴 콘텐츠로 신제품 자연 노출. 연예인 가족 케미스트리를 활용한 PT(브랜드 페이드) 콘텐츠 마케팅 사례 — 광고 티 안 나는 '일상 루틴 노출' 포맷이 1인 브랜드 인플루언서 협업 설계에도 그대로 적용 가능.</div>
+          <a class="news-link" href="http://www.lawissue.co.kr/view.php?ud=202605061803059028204ead0791_12" target="_blank">📰 로이슈 →</a>
+        </div>
+
+        <p class="empty" style="margin-top:8px;">💡 시사점 — Vol.6 ⭐핵심 카테고리에서 이어지는 후속. 필립스 = 네이버 공식몰 + 가족 인플루언서, P&G 오랄비 = 쿠팡 브랜드데이 + 가족 선물의 채널·메시지 분기가 이번 주에도 유지. 한 채널에서 둘이 정면충돌하지 않는 구도는 양사 모두 SOV를 안정적으로 확보하는 모범적 분기 사례.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ▸ 육포 -->
+      <div class="sec" id="sec-jerky-7" data-sec="jerky">
+        <div class="sec-header">
+          <div class="sec-dot dot-jerky"></div>
+          <div class="sec-title">5. 육포 (Jerky)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;">💡 Jack Link's × MrBeast WTF ANZ 캠페인 당첨자 30일 공개 윈도우 진행 중 — 다음 주 결과 발표 모니터링 필요. 국내 잭링크스 신규 커뮤니케이션 미확인.</p>
+      </div>
+
+    </div><!-- /issue-body Vol.7 -->
+  </details>
+
+  <!-- ════════════ ISSUE Vol.6 ════════════ -->
+  <details class="issue"
+    data-secs="commerce marketing dish battery shaver tooth jerky"
+    data-text="커머스 동향 쿠팡 가정의 달 빅세일 와우회원 브랜드데이 오랄비 쿠쿠 CJ제일제당 정관장 오픈서베이 온라인 쇼핑 트렌드 리포트 2026 네이버플러스스토어 토스쇼핑 AI 쇼핑 가전 어버이날 자동혈압계 공기청정기 마케팅 뉴스 The Drum Awards Marketing Americas 2026 Snap Grace Kao Edison Ballroom 아이보스 넥스트커머스 Meta 어드밴티지 트렌드모니터 압축소비 의도적 안티스위치 나이무용론 위안 자기 정체성 캐릿 Z세대 플랫폼별 트렌드 저소비 식기세척기 Cascade Clean Machine Reggie Repairman Finish 건전지 Duracell Messi 전기면도기 Braun Philips Panasonic 전동칫솔 필립스 소닉케어 올 뉴 소닉케어 프로 박수홍 행복해다홍 iF 디자인 어워드 2026 30일 환불 보장 웰컴팩 오랄비 쿠팡 브랜드데이 육포 Jack Link's MrBeast WTF ANZ">
 
       <!-- 섹션 점프 바 -->
       <div class="jump-bar">
