@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" data-build-ts="2026-10-05 09:15 KST">
+<html lang="ko" data-build-ts="2026-10-12 09:00 KST">
 <head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -51,6 +51,7 @@
       --c-shaver: #06d6a0;
       --c-tooth: #118ab2;
       --c-jerky: #ef476f;
+      --c-womanizer: #b388ff;
       --header-h: 140px;
     }
 
@@ -129,6 +130,7 @@
     .snav-btn[data-sec="shaver"].active     { background: var(--c-shaver); }
     .snav-btn[data-sec="tooth"].active      { background: var(--c-tooth); }
     .snav-btn[data-sec="jerky"].active      { background: var(--c-jerky); }
+    .snav-btn[data-sec="womanizer"].active  { background: var(--c-womanizer); color: #222; }
 
     /* ── MAIN ── */
     main {
@@ -197,6 +199,7 @@
     .chip-shaver    { background: rgba(6,214,160,.15);   color: var(--c-shaver); }
     .chip-tooth     { background: rgba(17,138,178,.15);  color: var(--c-tooth); }
     .chip-jerky     { background: rgba(239,71,111,.15);  color: var(--c-jerky); }
+    .chip-womanizer { background: rgba(179,136,255,.15); color: var(--c-womanizer); }
 
     /* ── ISSUE BODY ── */
     .issue-body {
@@ -259,6 +262,7 @@
     .dot-shaver    { background: var(--c-shaver); }
     .dot-tooth     { background: var(--c-tooth); }
     .dot-jerky     { background: var(--c-jerky); }
+    .dot-womanizer { background: var(--c-womanizer); }
 
     .sec-title { font-size: 0.92rem; font-weight: 700; }
 
@@ -275,6 +279,7 @@
     .news-card.commerce  { border-left-color: var(--c-commerce); }
     .news-card.marketing { border-left-color: var(--c-marketing); }
     .news-card.dish      { border-left-color: var(--c-dish); }
+    .news-card.womanizer { border-left-color: var(--c-womanizer); }
     .news-card.ref       { border-left-color: var(--accent); background: rgba(108,99,255,.06); }
 
     .ref-badge {
@@ -321,7 +326,7 @@ body{padding-top:30px !important}
 </style>
 </head>
 <body>
-<div id="__topbar">📅 마지막 업데이트: 2026-10-05 09:15 KST</div>
+<div id="__topbar">📅 마지막 업데이트: 2026-10-12 09:00 KST</div>
 <script>
 (function(){
   var bar = document.getElementById('__topbar');
@@ -370,6 +375,7 @@ body{padding-top:30px !important}
     <button class="snav-btn active" data-sec="all"       onclick="navTo('all')">전체</button>
     <button class="snav-btn"        data-sec="commerce"  onclick="navTo('commerce')">🛒 커머스 동향</button>
     <button class="snav-btn"        data-sec="marketing" onclick="navTo('marketing')">📣 마케팅 뉴스</button>
+    <button class="snav-btn"        data-sec="womanizer" onclick="navTo('womanizer')">💜 우머나이저</button>
     <button class="snav-btn"        data-sec="dish"      onclick="navTo('dish')">🍽️ 식기세척기 세제</button>
     <button class="snav-btn"        data-sec="battery"   onclick="navTo('battery')">🔋 건전지</button>
     <button class="snav-btn"        data-sec="shaver"    onclick="navTo('shaver')">🪒 전기면도기</button>
@@ -381,11 +387,187 @@ body{padding-top:30px !important}
 <!-- ══════════ MAIN ══════════ -->
 <main>
   <div class="meta-row">
-    <span>총 <strong id="visibleCount">27</strong>개 이슈</span>
+    <span>총 <strong id="visibleCount">28</strong>개 이슈</span>
     <span id="filterLabel"></span>
   </div>
 
 -->
+  <!-- ════════════ ISSUE Vol.28 ════════════ -->
+  <details class="issue" open
+    data-secs="commerce marketing womanizer"
+    data-text="커머스 동향 마케팅 뉴스 업계 소비자 트렌드 우머나이저 Womanizer 경쟁사 광고 소재 광고 정책 건전지 전기면도기 전동칫솔 육포 쿠팡 장애 LELO MONA Spectra 레드라이트 바이담 KT Y트렌드북 네트왓킹 스크롤픽 밸런쉼 ">
+    <summary class="issue-summary">
+      <span class="toggle-icon">▶</span>
+      <div class="issue-meta">
+        <div class="issue-title">📋 Vol.28 — 2026년 10월 2주차</div>
+        <div class="issue-date">2026.10.05 – 2026.10.11 | 발행 2026.10.12</div>
+        <div class="issue-chips">
+          <span class="chip chip-commerce">🛒 커머스 동향</span>
+          <span class="chip chip-marketing">📣 마케팅 뉴스</span>
+          <span class="chip chip-womanizer">💜 우머나이저</span>
+        </div>
+      </div>
+    </summary>
+
+    <div class="issue-body" id="body-vol28">
+
+      <!-- 섹션 점프 바 -->
+      <div class="jump-bar">
+        <span>바로가기 →</span>
+        <a class="jump-btn" onclick="jumpTo('sec-commerce-28')">🛒 커머스</a>
+        <a class="jump-btn" onclick="jumpTo('sec-marketing-28')">📣 마케팅</a>
+        <a class="jump-btn" onclick="jumpTo('sec-womanizer-28')">💜 우머나이저</a>
+        <a class="jump-btn" onclick="jumpTo('sec-battery-28')">🔋 건전지</a>
+        <a class="jump-btn" onclick="jumpTo('sec-shaver-28')">🪒 전기면도기</a>
+        <a class="jump-btn" onclick="jumpTo('sec-tooth-28')">🪥 전동칫솔</a>
+        <a class="jump-btn" onclick="jumpTo('sec-jerky-28')">🥩 육포</a>
+      </div>
+
+      <div class="sec" id="sec-commerce-28" data-sec="commerce">
+        <div class="sec-header">
+          <div class="sec-dot dot-commerce"></div>
+          <div class="sec-title">🛒 커머스 동향 (Commerce Trends)</div>
+        </div>
+
+        <div class="news-card commerce">
+          <div class="news-date">2026.10.09 · 국내</div>
+          <div class="news-headline">쿠팡·쿠팡이츠·쿠팡플레이 새벽 접속 장애 — 약 2시간, 주문 취소 고객에 쿠팡캐시 5,000원 보상</div>
+          <div class="news-summary">MTN 보도에 따르면 <strong>9일 자정 무렵 시작해 약 2시간 이어진 뒤 정상화</strong>됐다. 오전 1시쯤부터 메인 화면은 열렸지만 <strong>상품 상세 이동·로그인에서 오류가 반복</strong>됐고, 일부 주문 취소와 음식 배달 불가 피해가 있었다. 보상은 <strong>쿠팡 주문 취소 고객 쿠팡캐시 5,000원(6개월 사용)</strong>, <strong>쿠팡이츠 주문 미접수 1,000원·결제 후 취소 3,000원 쿠폰</strong>, 라이더에게 해당 주문 배달비 전액이며, 입점 음식점은 주문 수락 후 취소 건을 보상할 방침(피해 규모 파악 중)이다. <strong>장애 원인은 해당 기사에 명시되지 않았다.</strong></div>
+          <a class="news-link" href="https://news.mtn.co.kr/news-detail/2026100916342654986" target="_blank">📰 MTN →</a>
+        </div>
+        <div class="news-card commerce">
+          <div class="news-date">2026.10.10 · 국내</div>
+          <div class="news-headline">가을옷 할인전 — 쿠팡 '맨투맨&amp;후디 페스티벌'(11일까지), 롯데온·W컨셉·11번가도 행사</div>
+          <div class="news-summary">뉴시스 주말 이커머스 정리에 따르면 쿠팡은 <strong>130여 개 브랜드가 참여하는 '맨투맨&amp;후디 페스티벌'을 11일까지</strong> 열고, 구매금액별 추가 쿠폰(<strong>3만 원 이상 2,000원 · 5만 원 이상 5,000원 · 7만 원 이상 1만 원</strong>)을 준다. 롯데온(나인웨스트, 11일까지), W컨셉(캐주얼데이즈, 14일까지), 11번가(우아럭스 가을 럭셔리, 11일까지)도 행사를 진행한다. 컬리·무신사·올리브영 행사는 기사에 없다.</div>
+          <a class="news-link" href="https://www.newsis.com/view/NISX20261008_0003819792" target="_blank">📰 뉴시스 →</a>
+        </div>
+        <p class="empty" style="margin-top:8px;"><strong>💡 시사점</strong> — 지난 몇 주 우리는 쿠팡의 <strong>신뢰 이슈(과징금·조사방해)</strong>를 적어 왔는데, 이번 주는 그게 <strong>서비스 안정성</strong>으로 이어진 주다. 셋이다. ① <strong>한 플랫폼 장애가 주문 취소·배달 불가로 바로 이어졌고</strong>, 보상도 쿠팡 쪽이 일괄 처리했다. 쿠팡 단일 채널 비중이 큰 브랜드라면 <strong>장애 시간대(심야~새벽)에 걸린 주문·광고 집행·정산 영향이 있었는지</strong> 이번 주 안에 한 번 확인해 볼 만하다(우리 계정에 실제 영향이 있었는지는 이 기사로는 알 수 없다). ② <strong>원인이 공개되지 않았으므로 '보안 문제'로 단정하지 않는다</strong> — 재발 여부와 쿠팡의 후속 설명이 나오면 그때 다시 본다. ③ 와이즈앱·리테일의 10월 데이터(9월 결제 추정 등)는 이번 주 검색에서 <strong>확인되지 않았다</strong>. 참고로 국가데이터처의 8월 온라인쇼핑동향(10/1 발표, 거래액 24조 2,118억 원·전년 대비 +7.3%)은 <strong>게재일이 이번 주 범위 밖이고 원문을 직접 확인하지 못해</strong> 집계에서 제외했다.</p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="sec" id="sec-marketing-28" data-sec="marketing">
+        <div class="sec-header">
+          <div class="sec-dot dot-marketing"></div>
+          <div class="sec-title">📣 마케팅 뉴스 (Marketing News)</div>
+        </div>
+
+        <p class="empty"><strong>① 업계 뉴스</strong></p>
+        <p class="empty" style="margin-top:8px;">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;"><strong>💡 시사점</strong> — 아이보스·더피알·오픈서베이·Ad Age·The Drum을 검색했지만 <strong>이번 주(10/5~10/11) 게재일이 명확히 확인되는 업계 뉴스는 찾지 못했다.</strong> 검색에 잡힌 건 4월(AI 가상인물 광고 표시 의무)·6월(AI 기능 광고 실증 의무) 공정위 건과 2025년 메타 업데이트 글이라 범위 밖이어서 제외했다. 오래된 기사로 채우지 않는다.</p>
+        <p class="empty" style="margin-top:14px;"><strong>② 소비자 트렌드</strong></p>
+        <div class="news-card marketing" style="margin-top:8px;">
+          <div class="news-date">2026.10.07 · 소비자 · 국내</div>
+          <div class="news-headline">"네트왓킹·스크롤픽·밸런쉼…" KT, Z세대가 꼽은 '2026 Y트렌드북' 5대 키워드 발표</div>
+          <div class="news-summary">KT가 대학생 마케팅 서포터즈 'Y퓨처리스트' <strong>100명이 약 3개월간 조사</strong>한 Z세대 라이프스타일·소비문화를 정리했다. 5대 키워드는 ① <strong>네트왓킹(NetWHATking)</strong> — 사람보다 함께 경험하는 '무엇'을 중심으로 관계를 넓히는 흐름, ② <strong>스크롤픽(Scroll Pick)</strong> — 스크롤하다 본 콘텐츠를 바로 구매, ③ <strong>밸런쉼</strong> — 적극적인 휴식과 회복으로 일상의 균형을 찾는 태도, ④ <strong>현재진행력</strong> — 결과보다 진행 과정을 나누며 성장을 돕는 방식, ⑤ <strong>트라이에이터(Try-ator)</strong> — AI로 누구나 콘텐츠 창작에 도전하는 흐름이다.</div>
+          <a class="news-link" href="https://www.fnnews.com/news/202610070943339142" target="_blank">📰 파이낸셜뉴스 →</a>
+        </div>
+        <p class="empty" style="margin-top:8px;"><strong>💡 시사점</strong> — 표본이 <strong>대학생 서포터즈 100명의 팀 단위 조사</strong>라 통계적 대표성을 주장하긴 어렵고, 기업이 발표한 키워드 모음이라는 점도 감안해야 한다. 그래도 우리 일과 닿는 건 둘이다. ① <strong>'스크롤픽'</strong> — 피드·숏폼에서 본 뒤 <strong>바로 구매</strong>로 이어지는 흐름이라, 소재 첫 장면과 상세페이지·구매 버튼까지의 거리를 짧게 보는 근거가 된다. ② <strong>'밸런쉼'</strong> — 휴식·회복을 '적극적으로' 챙기는 태도라, 아래 우머나이저 칸의 <strong>회복 루틴 프레이밍</strong> 아이디어의 배경으로 쓴다. 국내 다른 조사(트렌드모니터·대학내일20대연구소)에서 같은 결이 나오는지는 확인되지 않았다.</p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="sec" id="sec-womanizer-28" data-sec="womanizer">
+        <div class="sec-header">
+          <div class="sec-dot dot-womanizer"></div>
+          <div class="sec-title">1. 우머나이저 (Womanizer)</div>
+        </div>
+
+        <div class="news-card ref">
+          <span class="ref-badge">요약</span>
+          <div class="news-summary">이번 주 확인된 우머나이저 관련 핵심은 <strong>경쟁사 LELO의 레드라이트 '웰니스 기기' 출시(10/9)</strong> 한 건이다. Womanizer·Satisfyer·Tenga·Dame의 이번 주 신제품·캠페인, 한국 채널 가격·순위·리뷰 변동, 광고 정책 변경은 <strong>확인되지 않았다</strong>(확인 못 한 것과 없는 것은 구분해서 적는다).</div>
+        </div>
+        <p class="empty" style="margin-top:12px;"><strong>① 경쟁사 동향</strong></p>
+        <div class="news-card womanizer">
+          <div class="news-date">2026.10.09 · 해외 · 경쟁사 신제품</div>
+          <div class="news-headline">LELO, 'MONA™ Spectra' 공개 — "세계 최초 럭셔리 레드라이트 인티메이트 웰니스 마사저" (299 EUR/USD)</div>
+          <div class="news-summary">PR Newswire 보도자료 기준 <strong>G스팟 타깃 진동 + LED 광(레드, 앱 해제 시 근적외선 850nm·그린·블루)</strong> 조합이다. <strong>SmoothRise™ 16단계 강도, 내장 8모드 + 앱 전용 모드, 100% 방수</strong>, 가격은 <strong>299 EUR/USD</strong>(통화별 시장 구분은 명시 없음). 한국 출시·판매 여부와 정확한 출시일은 <strong>보도자료에 없다.</strong> 마케팅 문구는 "일반적인 웰니스 기기는 감각적 쾌락과 신체적 케어를 분리하지만 Mona Spectra는 둘을 합친다", "장기적 인티메이트 웰니스·탄력·세포 활력을 지원하도록 설계" 등이며(원문 영어를 조비스가 번역), <strong>자체 설문(약 69% 관심, 20% 경험)</strong>을 후킹 수치로 썼다. 탄력·순환 개선 같은 건강 문구에 <strong>임상 근거는 보도자료에 제시되지 않았다.</strong></div>
+          <a class="news-link" href="https://prnewswire.com/news-releases/lelo-reimagines-intimacy-with-mona-spectra-the-worlds-first-luxury-red-light-intimate-wellness-massager-302903368.html" target="_blank">📰 PR Newswire →</a>
+        </div>
+        <div class="news-card womanizer">
+          <div class="news-date">2026.08.06 · 국내 · 참고(범위 밖 배경)</div>
+          <div class="news-headline">우머나이저, 바이담과 국내 독점 유통 계약 — 정품 인증·전국 공식 판매처 검색, 보증 2년→3년</div>
+          <div class="news-summary">이번 주 뉴스는 아니지만 <strong>한국 시장의 현재 구조</strong>라 기록한다. 머니투데이에 따르면 브랜드 보유사 러브허니 그룹이 <strong>국내 유통·마케팅 파트너를 바이담으로 일원화</strong>했고, 바이담이 정품 공급·정품 인증·A/S를 전담한다. <strong>정품 보증·A/S 기간은 2년→3년</strong>으로 늘었고, 우머나이저 코리아 홈페이지는 <strong>정품 인증 시스템·전국 공식 판매처 검색·웰니스 콘텐츠</strong>를 제공한다. 판매는 바이담 편집숍 '다락'(B2C)과 전국 온·오프라인 리테일러(B2B)를 통한다.</div>
+          <a class="news-link" href="https://www.mt.co.kr/industry/2026/08/06/2026080609304496493" target="_blank">📰 머니투데이 →</a>
+        </div>
+        <p class="empty" style="margin-top:4px;">· <strong>Womanizer 글로벌·Satisfyer·Tenga·Dame 신제품·가격·프로모션:</strong> 이번 주 특이사항 없음(검색에서 10/5~10/11 게재 보도 확인되지 않음. IFA 소개 페이지의 'Next Liberty'는 게재일 미확인이라 제외).</p>
+        <p class="empty" style="margin-top:4px;">· <strong>한국 채널(쿠팡·자사몰·오픈마켓) 가격·순위·리뷰 변화:</strong> 웹 검색으로는 확인하지 못했다. 쿠팡 검색 결과·리뷰 수·가격은 <strong>직접 조회가 필요</strong>해서 이번 주 브리핑에는 수치를 싣지 않는다.</p>
+        <p class="empty" style="margin-top:4px;">· <strong>한국 시장·규제 이슈:</strong> 이번 주 성인용품 관련 신규 규제·단속 보도는 확인되지 않았다(검색에 잡힌 건 9/26 보도된 불법 음란사이트 단속 통계와 5월 리얼돌 판결로, 범위 밖이고 우머나이저와 직접 관련 없어 제외).</p>
+        <p class="empty" style="margin-top:16px;"><strong>② 광고 소재 인사이트</strong></p>
+        <p class="empty" style="margin-top:6px;">관찰된 소재 각도</p>
+        <p class="empty" style="margin-top:4px;">· <strong>카피 각도(LELO):</strong> "쾌락 vs 케어를 따로 팔던 시장에서 둘을 합쳤다"는 <strong>이중 효용 프레이밍</strong>, 제품 카테고리를 '섹스토이'가 아닌 <strong>'인티메이트 웰니스 마사저'</strong>로 명명.</p>
+        <p class="empty" style="margin-top:4px;">· <strong>후킹 방식:</strong> 자체 설문 수치(69% 관심 · 20% 경험)로 <strong>"이미 많은 사람이 관심 있다"는 사회적 증거</strong>를 앞세움. 기술 용어(레드라이트·근적외선 850nm 등 파장·앱 제어)로 프리미엄·신뢰 부여.</p>
+        <p class="empty" style="margin-top:4px;">· <strong>비주얼·한국 소비자 반응:</strong> 보도자료 텍스트만으로는 <strong>비주얼 구성을 확인하지 못했다</strong>. 국내 보도·후기·커뮤니티 반응도 이번 주 검색되지 않았다.</p>
+        <p class="empty" style="margin-top:12px;">우리가 시도할 소재 아이디어 3가지</p>
+        <div class="news-card womanizer">
+          <div class="news-headline">💡 아이디어 ① 정품 인증 · 3년 보증 '신뢰' 소재</div>
+          <div class="news-summary"><strong>각도:</strong> "정품 확인 → 3년 보증"을 첫 장면에 놓고, 공식 판매처 확인 과정을 보여 주는 소재(비정품·중고 우려 해소). <strong>근거:</strong> 바이담 독점 유통 후 한국 공식 홈페이지가 정품 인증·공식 판매처 검색·3년 A/S를 제공(머니투데이 8/6), 이번 주 쿠팡 장애 보도(MTN 10/9)로 단일 플랫폼 의존 리스크가 부각. <strong>주의:</strong> 보증 조건은 공식 홈페이지 기준으로 확인한 뒤 표기.</div>
+        </div>
+        <div class="news-card womanizer">
+          <div class="news-headline">💡 아이디어 ② '회복 루틴' 셀프케어 프레이밍 (효능 문구 배제)</div>
+          <div class="news-summary"><strong>각도:</strong> 하루를 마무리하는 휴식·회복 루틴 안에 제품을 놓는 톤('적극적 휴식'). <strong>근거:</strong> KT Y트렌드북의 '밸런쉼'(10/7), LELO가 제품을 '웰니스 기기'로 포지셔닝(10/9). <strong>주의:</strong> LELO처럼 탄력·순환 같은 <strong>건강 효능 문구는 근거 없이 쓰지 않는다</strong> — 임상 근거가 제시되지 않았고, 메타는 건강 중심이어도 성적 쾌락 중심 소재를 허용하지 않는다(아래 ③).</div>
+        </div>
+        <div class="news-card womanizer">
+          <div class="news-headline">💡 아이디어 ③ '숫자' 후킹 — 실제 구매·후기 데이터 기반</div>
+          <div class="news-summary"><strong>각도:</strong> "○명이 선택 · 재구매 ○%" 같은 <strong>사회적 증거 수치</strong>를 첫 문장에 배치. <strong>근거:</strong> LELO가 설문 수치(69%·20%)를 후킹으로 사용(10/9), '스크롤픽' 흐름상 짧은 시간에 판단 근거를 주는 구조가 유리(KT 10/7, 단 표본 한계). <strong>주의:</strong> 우리 쪽 <strong>실제 집계 수치만</strong> 사용하고 기간·기준을 명시.</div>
+        </div>
+        <p class="empty" style="margin-top:16px;"><strong>③ 성인용품 광고 정책·제재</strong></p>
+        <p class="empty" style="margin-top:4px;">· <strong>이번 주 변경·제재 사례:</strong> 확인되지 않았다(검색에서 10/5~10/11 게재된 관련 보도가 잡히지 않았다. 매체별 공식 공지를 직접 확인한 것은 아님).</p>
+        <p class="empty" style="margin-top:4px;">· <strong>현행 기준 참고(메타 공식 정책):</strong> 성건강·웰니스·생식건강 제품 광고는 가능하지만 <strong>"성적 쾌락이나 성적 기능 향상에 초점을 둔 성적 자극 제품" 광고는 불가</strong>, 예시로 <strong>'Sex toys'가 명시</strong>돼 있다. 정책 페이지 변경 이력에 2026-07-23 항목이 있으나 <strong>무엇이 바뀌었는지는 페이지에 적혀 있지 않다</strong>(메타 투명성 센터).</p>
+        <p class="empty" style="margin-top:4px;">· <strong>국내 매체:</strong> 네이버·쿠팡 등의 공식 기준은 이번 주 직접 확인하지 못했다. 대행사 블로그(아이보스 계열 AMPM)는 성인용품을 네이버 광고 설정이 어려운 업종으로 분류하지만 <strong>비공식·게재일 불명</strong>이라 확정 근거로 쓰지 않는다 — 광고 전 각 매체 공식 업종 제한 가이드 확인이 필요하다.</p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="sec" id="sec-battery-28" data-sec="battery">
+        <div class="sec-header">
+          <div class="sec-dot dot-battery"></div>
+          <div class="sec-title">2. 건전지 (Batteries)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;"><strong>💡 참고</strong> — 듀라셀·에너자이저·벡셀의 10월 신제품·광고·리콜 소식은 검색되지 않았다(듀라셀의 에너자이저 상대 광고 소송은 2025년 6월 건이라 범위 밖).</p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="sec" id="sec-shaver-28" data-sec="shaver">
+        <div class="sec-header">
+          <div class="sec-dot dot-shaver"></div>
+          <div class="sec-title">3. 전기면도기 (Electric Shavers)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;"><strong>💡 참고</strong> — 브라운·필립스·파나소닉의 이번 주 신제품·캠페인은 확인되지 않았다. 파나소닉 Series 900+ 하반기 출시 예고(T3)는 게재일을 확인하지 못했고, 미국 아마존 10월 프라임 행사(10/6~7)에 필립스·파나소닉 면도기가 포함됐다는 글은 <strong>단일 출처라 집계하지 않는다</strong>.</p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="sec" id="sec-tooth-28" data-sec="tooth">
+        <div class="sec-header">
+          <div class="sec-dot dot-tooth"></div>
+          <div class="sec-title">4. 전동칫솔 (Electric Toothbrushes)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;"><strong>💡 참고</strong> — 오랄비·필립스 소닉케어의 이번 주 신제품·리콜은 확인되지 않았다. 지난주 다룬 <strong>다이슨 카메라젯 건</strong>의 국내 판매 중단·리콜 후속 보도도 이번 주 검색되지 않았다.</p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="sec" id="sec-jerky-28" data-sec="jerky">
+        <div class="sec-header">
+          <div class="sec-dot dot-jerky"></div>
+          <div class="sec-title">5. 육포 (Jerky)</div>
+        </div>
+
+        <p class="empty">이번 주 특이사항 없음.</p>
+        <p class="empty" style="margin-top:8px;"><strong>💡 참고</strong> — 잭링크스(Jack Link's)의 이번 주 신규 소식은 없다. 7월 말 보도된 <strong>세븐일레븐 해외 직소싱 잭링크스 육포 국내 판매</strong>(4종, 35g 5,500원)는 이번 주 범위 밖이며 원문은 직접 확인하지 못했다.</p>
+      </div>
+
+    </div><!-- /issue-body Vol.28 -->
+  </details>
+
   <!-- ════════════ ISSUE Vol.27 ════════════ -->
   <details class="issue" open
     data-secs="commerce marketing"
@@ -5263,7 +5445,7 @@ body{padding-top:30px !important}
   function updateLabel(sec) {
     const labels = {
       all: '', commerce: '🛒 커머스 동향', marketing: '📣 마케팅 뉴스',
-      dish: '🍽️ 식기세척기 세제', battery: '🔋 건전지',
+      womanizer: '💜 우머나이저', dish: '🍽️ 식기세척기 세제', battery: '🔋 건전지',
       shaver: '🪒 전기면도기', tooth: '🪥 전동칫솔', jerky: '🥩 육포'
     };
     const el = document.getElementById('filterLabel');
